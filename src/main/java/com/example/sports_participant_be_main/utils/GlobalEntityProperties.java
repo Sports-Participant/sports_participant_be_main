@@ -1,8 +1,6 @@
 package com.example.sports_participant_be_main.utils;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,4 +14,15 @@ public class GlobalEntityProperties {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void prePersist() {
+        this.setCreatedAt(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
+    }
+
+    @PreUpdate
+    protected void preUpdate() {
+        this.setUpdatedAt(LocalDateTime.now());
+    }
 }

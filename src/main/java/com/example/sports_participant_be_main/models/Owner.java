@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -27,7 +28,8 @@ public class Owner extends GlobalEntityProperties {
     @Column(name = "lastname", nullable = false, length = 20)
     private String lastname;
 
-    @Column(name = "email", nullable = false)
+    @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
+    @Column(name = "email", length=60, nullable = false)
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -41,15 +43,4 @@ public class Owner extends GlobalEntityProperties {
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-
-    @PrePersist
-    protected void prePersist() {
-        this.setCreatedAt(LocalDateTime.now());
-        this.setUpdatedAt(LocalDateTime.now());
-    }
-
-    @PreUpdate
-    protected void preUpdate() {
-        this.setUpdatedAt(LocalDateTime.now());
-    }
 }
