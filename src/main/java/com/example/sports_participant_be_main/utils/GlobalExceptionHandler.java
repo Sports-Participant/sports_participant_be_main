@@ -1,6 +1,7 @@
 package com.example.sports_participant_be_main.utils;
 
 import com.example.sports_participant_be_main.utils.exceptions.InternalException;
+import com.example.sports_participant_be_main.utils.exceptions.OwnerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +17,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 new ExceptionResponse(exception.getMessage(), ZonedDateTime.now()),
                 HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    @ExceptionHandler(OwnerNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleOwnerNotFoundException(RuntimeException exception) {
+        return new ResponseEntity<>(
+                new ExceptionResponse(exception.getMessage(), ZonedDateTime.now()),
+                HttpStatus.NOT_FOUND
         );
     }
 }

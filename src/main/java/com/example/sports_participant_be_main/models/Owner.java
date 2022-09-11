@@ -1,5 +1,6 @@
 package com.example.sports_participant_be_main.models;
 
+import com.example.sports_participant_be_main.security.Role;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,10 +9,15 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "owners")
+@Table(name = "owners",
+        indexes = {
+            @Index(name = "email_index", columnList = "email")
+        })
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Owner extends GlobalEntityProperties {
@@ -29,7 +35,7 @@ public class Owner extends GlobalEntityProperties {
     private String lastname;
 
     @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
-    @Column(name = "email", length=60, nullable = false)
+    @Column(name = "email", length=60, nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -43,4 +49,7 @@ public class Owner extends GlobalEntityProperties {
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+
+    @Column(name = "role", updatable = false)
+    private Role role;
 }
