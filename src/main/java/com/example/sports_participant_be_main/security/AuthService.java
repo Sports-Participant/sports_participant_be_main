@@ -4,9 +4,11 @@ import com.example.sports_participant_be_main.security.jwt.JwtAuthentication;
 import com.example.sports_participant_be_main.security.jwt.JwtProvider;
 import com.example.sports_participant_be_main.security.jwt.JwtRequest;
 import com.example.sports_participant_be_main.security.jwt.JwtResponse;
+import com.example.sports_participant_be_main.utils.ResponseMessages;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
 
     private final UserService userService;
@@ -30,7 +33,8 @@ public class AuthService {
             refreshStorage.put(user.getEmail(), refreshToken);
             return new JwtResponse(accessToken, refreshToken);
         } else {
-            throw new AuthException("Incorrect password");
+            log.error(ResponseMessages.Auth.INCORRECT_PASSWORD.message);
+            throw new AuthException(ResponseMessages.Auth.INCORRECT_PASSWORD.message);
         }
     }
 
@@ -61,7 +65,8 @@ public class AuthService {
                 return new JwtResponse(accessToken, newRefreshToken);
             }
         }
-        throw new AuthException("Invalid JWT");
+        log.error(ResponseMessages.Auth.INVALID_TOKEN.message);
+        throw new AuthException(ResponseMessages.Auth.INVALID_TOKEN.message);
     }
 
     public JwtAuthentication getAuthInfo() {

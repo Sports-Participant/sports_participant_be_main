@@ -21,9 +21,6 @@ public class UserService {
             Owner owner = ownerRepo.findOwnerByEmail(email).get();
             user = new User(owner.getEmail(), owner.getPassword(), Collections.singleton(owner.getRole()));
         }
-//        else if () {
-//
-//        }
 
         return user;
     }

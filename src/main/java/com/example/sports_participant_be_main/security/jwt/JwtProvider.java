@@ -1,6 +1,7 @@
 package com.example.sports_participant_be_main.security.jwt;
 
 import com.example.sports_participant_be_main.security.User;
+import com.example.sports_participant_be_main.utils.ResponseMessages;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -72,15 +73,15 @@ public class JwtProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException expEx) {
-            log.error("Token expired", expEx);
+            log.error(ResponseMessages.Auth.EXPIRED_TOKEN.message, expEx);
         } catch (UnsupportedJwtException unsEx) {
-            log.error("Unsupported jwt", unsEx);
+            log.error(ResponseMessages.Auth.UNSUPPORTED_JWT.message, unsEx);
         } catch (MalformedJwtException mjEx) {
-            log.error("Malformed jwt", mjEx);
+            log.error(ResponseMessages.Auth.MALFORMED_JWT.message, mjEx);
         } catch (SignatureException sEx) {
-            log.error("Invalid signature", sEx);
+            log.error(ResponseMessages.Auth.INVALID_SIGNATURE.message, sEx);
         } catch (Exception e) {
-            log.error("invalid token", e);
+            log.error(ResponseMessages.Auth.INVALID_TOKEN.message, e);
         }
         return false;
     }
