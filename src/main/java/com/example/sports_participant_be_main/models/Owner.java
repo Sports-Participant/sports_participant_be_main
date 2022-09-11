@@ -1,9 +1,9 @@
 package com.example.sports_participant_be_main.models;
 
+import com.example.sports_participant_be_main.models.dto.OwnerDto;
 import com.example.sports_participant_be_main.security.Role;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -49,4 +49,19 @@ public class Owner extends GlobalEntityProperties {
 
     @Column(name = "role", updatable = false)
     private Role role;
+
+    public OwnerDto ofDto() {
+        return OwnerDto.builder()
+                .id(this.id)
+                .firstname(this.firstname)
+                .lastname(this.lastname)
+                .email(this.email)
+                .password(this.password)
+                .country(this.country)
+                .city(this.city)
+                .phoneNumber(this.phoneNumber)
+                .role(this.role)
+                .build()
+                ;
+    }
 }
