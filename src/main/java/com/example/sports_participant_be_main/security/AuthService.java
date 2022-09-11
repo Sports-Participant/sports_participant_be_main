@@ -10,6 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.message.AuthException;
@@ -24,10 +25,11 @@ public class AuthService {
     private final UserService userService;
     private final Map<String, String> refreshStorage = new HashMap<>();
     private final JwtProvider jwtProvider;
+    private final PasswordEncoder encoder;
 
     public JwtResponse login(@NonNull JwtRequest authRequest) throws AuthException {
         final User user = userService.getByEmail(authRequest.getEmail());
-        if (user.getPassword().equals(authRequest.getPassword())) {
+        if (encoder.matches(authRequest.getPassword(), user.getPassword())) {
             final String accessToken = jwtProvider.generateAccessToken(user);
             final String refreshToken = jwtProvider.generateRefreshToken(user);
             refreshStorage.put(user.getEmail(), refreshToken);
@@ -38,7 +40,7 @@ public class AuthService {
         }
     }
 
-    public JwtResponse getAccessToken(@NonNull String refreshToken) throws AuthException {
+    public JwtResponse getAccessToken(@NonNull String refreshToken) {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
             final String email = claims.getSubject();

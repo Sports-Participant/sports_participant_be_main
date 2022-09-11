@@ -4,7 +4,9 @@ public class ResponseMessages {
 
     public enum Owner {
         NOT_FOUND("Owner now found"),
-        CREATED("Owner has been created");
+        CREATED("Owner has been created"),
+        OWNER_EXISTS("Owner already exists")
+        ;
 
         public final String message;
         Owner(String message) {
@@ -18,7 +20,8 @@ public class ResponseMessages {
         EXPIRED_TOKEN("Token expired"),
         UNSUPPORTED_JWT("Unsupported jwt"),
         MALFORMED_JWT("Malformed jwt"),
-        INVALID_SIGNATURE("Invalid signature");
+        INVALID_SIGNATURE("Invalid signature")
+        ;
 
         public final String message;
         Auth(String message) {
