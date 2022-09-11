@@ -4,11 +4,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 @NoArgsConstructor
-public class InternalException extends RuntimeException {
+public class OwnerAlreadyExistsException extends RuntimeException {
 
-    public InternalException(String message) {
+    public OwnerAlreadyExistsException(String message) {
         super(message);
     }
 }

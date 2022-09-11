@@ -10,4 +10,10 @@ import java.time.ZonedDateTime;
 public class ExceptionResponse {
     private String message;
     private ZonedDateTime timestamp;
+    private Throwable cause;
+
+    public ExceptionResponse(String message, ZonedDateTime timestamp) {
+        this.message = message;
+        this.timestamp = timestamp;
+    }
 }
