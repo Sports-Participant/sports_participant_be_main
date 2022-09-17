@@ -17,6 +17,9 @@ import java.util.UUID;
         })
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Owner extends GlobalEntityProperties {
 
     @Id

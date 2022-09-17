@@ -1,6 +1,5 @@
 package com.example.sports_participant_be_main.controllers;
 
-import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.models.dto.OwnerDto;
 import com.example.sports_participant_be_main.services.OwnerService;
 import lombok.AllArgsConstructor;
@@ -20,8 +19,7 @@ public class OwnerController {
     private final OwnerService ownerService;
 
     @PostMapping("/add")
-    public ResponseEntity<OwnerDto> add(@Valid @RequestBody Owner owner){
-//        log.info("Test {}, really {}", 1, 4);
-        return new ResponseEntity<>(ownerService.save(owner).ofDto(), HttpStatus.CREATED);
+    public ResponseEntity<OwnerDto> add(@Valid @RequestBody OwnerDto ownerDto){
+        return new ResponseEntity<>(ownerService.save(ownerDto.ofEntity()).ofDto(), HttpStatus.CREATED);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.sports_participant_be_main.utils.exceptions.handlers;
 
 import com.example.sports_participant_be_main.utils.ExceptionResponse;
+import com.example.sports_participant_be_main.utils.exceptions.GymBrandHasAlreadyExistsException;
 import com.example.sports_participant_be_main.utils.exceptions.InternalException;
 import com.example.sports_participant_be_main.utils.exceptions.OwnerAlreadyExistsException;
 import com.example.sports_participant_be_main.utils.exceptions.OwnerNotFoundException;
@@ -41,6 +42,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OwnerAlreadyExistsException.class)
     public ResponseEntity<ExceptionResponse> handleOwnerAlreadyExistsException(Exception exception) {
+        return new ResponseEntity<>(
+                new ExceptionResponse(exception.getMessage(), ZonedDateTime.now()),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(GymBrandHasAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleGymBrandHasAlreadyExistsException(Exception exception) {
         return new ResponseEntity<>(
                 new ExceptionResponse(exception.getMessage(), ZonedDateTime.now()),
                 HttpStatus.CONFLICT
