@@ -3,7 +3,7 @@ package com.example.sports_participant_be_main.utils;
 public class ResponseMessages {
 
     public enum Owner {
-        NOT_FOUND("Owner now found"),
+        NOT_FOUND("Owner not found"),
         CREATED("Owner has been created"),
         OWNER_EXISTS("Owner already exists")
         ;
@@ -25,6 +25,16 @@ public class ResponseMessages {
 
         public final String message;
         Auth(String message) {
+            this.message = message;
+        }
+    }
+
+    public enum GymBrand {
+        GYM_BRAND_EXISTS("Gym brand already exists")
+        ;
+
+        public final String message;
+        GymBrand(String message) {
             this.message = message;
         }
     }
