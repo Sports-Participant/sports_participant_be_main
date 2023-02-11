@@ -1,8 +1,6 @@
 package com.example.sports_participant_be_main.services;
 
 import com.example.sports_participant_be_main.models.GymBrand;
-import com.example.sports_participant_be_main.models.Owner;
-import com.example.sports_participant_be_main.models.dto.GymBrandDto;
 import com.example.sports_participant_be_main.repositories.GymBrandRepo;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
 import com.example.sports_participant_be_main.utils.ResponseMessages;
@@ -12,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -20,21 +21,23 @@ public class GymBrandService {
     private final GymBrandRepo gymBrandRepo;
     private final OwnerRepo ownerRepo;
 
-    public GymBrand save(GymBrandDto gymBrandDto) {
-        GymBrand gymBrand = gymBrandDto.ofEntity();
-
-        if (gymBrandRepo.findByOwnerId(gymBrandDto.getOwnerID()).isPresent()) {
-            log.error(ResponseMessages.GymBrand.GYM_BRAND_EXISTS.message + " ownerID={}", gymBrandDto.getOwnerID());
-            throw new GymBrandHasAlreadyExistsException(ResponseMessages.GymBrand.GYM_BRAND_EXISTS.message);
+    public GymBrand save(GymBrand gymBrand, UUID ownerId) {
+        if (gymBrandRepo.findByName(gymBrand.getName()).isPresent()) {
+            log.error(ResponseMessages.GymBrand.GYM_BRAND_EXISTS.message + " ownerID={}", ownerId);
+            throw new GymBrandHasAlreadyExistsException();
         }
 
         gymBrand.setOwner(ownerRepo.
-                findOwnerById(gymBrandDto.getOwnerID())
+                findOwnerById(ownerId)
                 .orElseThrow(() -> {
-                    log.error(ResponseMessages.Owner.NOT_FOUND.message + " ownerID={}", gymBrandDto.getOwnerID());
-                    throw new OwnerNotFoundException(ResponseMessages.Owner.NOT_FOUND.message);
+                    log.error(ResponseMessages.Owner.NOT_FOUND.message + " ownerID={}", ownerId);
+                    throw new OwnerNotFoundException();
                 }));
 
         return gymBrandRepo.save(gymBrand);
+    }
+
+    public Collection<GymBrand> getAllByOwnerId(UUID ownerId) {
+        return this.gymBrandRepo.getAllByOwnerId(ownerId);
     }
 }

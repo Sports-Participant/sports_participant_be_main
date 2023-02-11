@@ -5,7 +5,9 @@ import com.example.sports_participant_be_main.security.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
+import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 @Builder(toBuilder = true)
@@ -36,6 +38,8 @@ public class OwnerDto {
     private String phoneNumber;
 
     private Role role;
+
+    private Collection<UUID> gymBrandsId;
 
     public Owner ofEntity(){
         return Owner.builder()

@@ -38,4 +38,14 @@ public class ResponseMessages {
             this.message = message;
         }
     }
+
+    public enum Other {
+        INTERNAL_SERVER_ERROR("Internal server error")
+        ;
+
+        public final String message;
+        Other(String message) {
+            this.message = message;
+        }
+    }
 }
