@@ -1,9 +1,7 @@
 package com.example.sports_participant_be_main.models;
 
-import com.example.sports_participant_be_main.models.dto.GymBrandDto;
+import com.example.sports_participant_be_main.dto.GymBrandDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 

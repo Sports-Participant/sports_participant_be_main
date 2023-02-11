@@ -1,7 +1,7 @@
 package com.example.sports_participant_be_main.controllers;
 
 import com.example.sports_participant_be_main.models.GymBrand;
-import com.example.sports_participant_be_main.models.dto.GymBrandDto;
+import com.example.sports_participant_be_main.dto.GymBrandDto;
 import com.example.sports_participant_be_main.services.GymBrandService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

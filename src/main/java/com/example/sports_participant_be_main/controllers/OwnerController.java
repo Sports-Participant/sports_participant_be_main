@@ -1,6 +1,6 @@
 package com.example.sports_participant_be_main.controllers;
 
-import com.example.sports_participant_be_main.models.dto.OwnerDto;
+import com.example.sports_participant_be_main.dto.OwnerDto;
 import com.example.sports_participant_be_main.services.OwnerService;
 import com.example.sports_participant_be_main.utils.exceptions.OwnerNotFoundException;
 import lombok.AllArgsConstructor;

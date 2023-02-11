@@ -1,10 +1,8 @@
 package com.example.sports_participant_be_main.models;
 
-import com.example.sports_participant_be_main.models.dto.OwnerDto;
+import com.example.sports_participant_be_main.dto.OwnerDto;
 import com.example.sports_participant_be_main.security.Role;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 

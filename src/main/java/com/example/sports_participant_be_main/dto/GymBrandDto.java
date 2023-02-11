@@ -1,4 +1,4 @@
-package com.example.sports_participant_be_main.models.dto;
+package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.GymBrand;
 import lombok.*;
