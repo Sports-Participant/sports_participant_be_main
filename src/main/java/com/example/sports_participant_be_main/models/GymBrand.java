@@ -6,7 +6,10 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -31,6 +34,12 @@ public class GymBrand extends GlobalEntityProperties {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
     private Owner owner;
+
+    @OneToMany(mappedBy = "gymBrand")
+    private Set<Location> locations = new HashSet<>();
+
+    @OneToMany(mappedBy = "gymBrand")
+    private Set<Employee> employees = new HashSet<>();
 
     public GymBrandDto ofDto() {
         return GymBrandDto.builder()

@@ -1,6 +1,6 @@
 package com.example.sports_participant_be_main.dto;
 
-import com.example.sports_participant_be_main.models.Owner;
+import com.example.sports_participant_be_main.models.Employee;
 import com.example.sports_participant_be_main.security.Role;
 import lombok.*;
 
@@ -12,11 +12,11 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OwnerDto {
+public class EmployeeDto {
 
     private UUID id;
 
-    @NotNull
+    @NonNull
     private String firstname;
 
     @NotNull
@@ -29,24 +29,19 @@ public class OwnerDto {
     @NotNull
     private String password;
 
-    private String country;
-
-    private String city;
-
     @NotNull
     private String phoneNumber;
 
+    @NotNull
     private Role role;
 
-    public Owner ofEntity(){
-        return Owner.builder()
+    public Employee ofEntity(){
+        return Employee.builder()
                 .id(this.id)
                 .firstname(this.firstname)
                 .lastname(this.lastname)
                 .email(this.email)
                 .password(this.password)
-                .country(this.country)
-                .city(this.city)
                 .phoneNumber(this.phoneNumber)
                 .role(this.role)
                 .build()

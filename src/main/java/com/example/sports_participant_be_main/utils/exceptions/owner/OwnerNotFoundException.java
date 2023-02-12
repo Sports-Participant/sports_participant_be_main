@@ -1,4 +1,4 @@
-package com.example.sports_participant_be_main.utils.exceptions;
+package com.example.sports_participant_be_main.utils.exceptions.owner;
 
 import com.example.sports_participant_be_main.utils.ResponseMessages;
 import lombok.extern.slf4j.Slf4j;

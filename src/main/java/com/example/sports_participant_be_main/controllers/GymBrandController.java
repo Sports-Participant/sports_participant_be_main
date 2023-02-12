@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/owners/{owner_id}/gym_brands")
+@RequestMapping("/staff/{staff_id}/gym_brands")
 public class GymBrandController {
 
     private final GymBrandService gymBrandService;
 
-    @PostMapping("/add")
-    public ResponseEntity<GymBrandDto> add(@PathVariable("owner_id") UUID ownerId, @Valid @RequestBody GymBrandDto gymBrandDto) {
+    @PostMapping("")
+    public ResponseEntity<GymBrandDto> add(@PathVariable("staff_id") UUID ownerId, @Valid @RequestBody GymBrandDto gymBrandDto) {
         return new ResponseEntity<>(
                 gymBrandService.save(gymBrandDto.ofEntity(), ownerId).ofDto(),
                 HttpStatus.CREATED
@@ -29,7 +29,7 @@ public class GymBrandController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<GymBrandDto>> getAllByOwnerId(@PathVariable("owner_id") UUID ownerId) {
+    public ResponseEntity<Collection<GymBrandDto>> getAllByOwnerId(@PathVariable("staff_id") UUID ownerId) {
         return new ResponseEntity<>(this.gymBrandService.getAllByOwnerId(ownerId)
                 .stream()
                 .map(GymBrand::ofDto)

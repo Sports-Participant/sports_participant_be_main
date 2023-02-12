@@ -2,7 +2,7 @@ package com.example.sports_participant_be_main.controllers;
 
 import com.example.sports_participant_be_main.dto.OwnerDto;
 import com.example.sports_participant_be_main.services.OwnerService;
-import com.example.sports_participant_be_main.utils.exceptions.OwnerNotFoundException;
+import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class OwnerController {
 
     private final OwnerService ownerService;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<OwnerDto> add(@Valid @RequestBody OwnerDto ownerDto){
         return new ResponseEntity<>(
                 ownerService.save(ownerDto.ofEntity()).ofDto(),
@@ -30,12 +30,11 @@ public class OwnerController {
 
     @GetMapping("/{owner_id}")
     public ResponseEntity<OwnerDto> getById(@PathVariable("owner_id") UUID ownerId) {
-        throw new OwnerNotFoundException();
-//        return new ResponseEntity<>(
-//                ownerService.getById(ownerId)
-//                        .orElseThrow(OwnerNotFoundException::new)
-//                        .ofDto(),
-//                HttpStatus.OK
-//        );
+        return new ResponseEntity<>(
+                ownerService.getById(ownerId)
+                        .orElseThrow(OwnerNotFoundException::new)
+                        .ofDto(),
+                HttpStatus.OK
+        );
     }
 }

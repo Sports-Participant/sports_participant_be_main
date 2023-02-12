@@ -1,26 +1,22 @@
 package com.example.sports_participant_be_main.models;
 
-import com.example.sports_participant_be_main.dto.OwnerDto;
+import com.example.sports_participant_be_main.dto.EmployeeDto;
 import com.example.sports_participant_be_main.security.Role;
-import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.*;
+import java.util.UUID;
 
 @Entity
-@Table(name = "owners",
-        indexes = {
-            @Index(name = "email_index", columnList = "email")
-        })
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "employee")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Owner extends GlobalEntityProperties {
+public class Employee {
 
     @Id
     @GeneratedValue(generator = "hibernate-uuid")
@@ -46,34 +42,25 @@ public class Owner extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private String password;
 
-    @Column(name = "country")
-    @EqualsAndHashCode.Include
-    private String country;
-
-    @Column(name = "city")
-    @EqualsAndHashCode.Include
-    private String city;
-
     @Column(name = "phone_number", nullable = false, unique = true)
     @EqualsAndHashCode.Include
     private String phoneNumber;
 
-    @Column(name = "role", updatable = false)
+    @Column(name = "role")
     @EqualsAndHashCode.Include
     private Role role;
 
-    @OneToMany(mappedBy = "owner")
-    private Set<GymBrand> gymBrands = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
+    private GymBrand gymBrand;
 
-    public OwnerDto ofDto() {
-        return OwnerDto.builder()
+    public EmployeeDto ofDto() {
+        return EmployeeDto.builder()
                 .id(this.id)
                 .firstname(this.firstname)
                 .lastname(this.lastname)
                 .email(this.email)
                 .password(this.password)
-                .country(this.country)
-                .city(this.city)
                 .phoneNumber(this.phoneNumber)
                 .role(this.role)
                 .build()
