@@ -1,14 +1,15 @@
 package com.example.sports_participant_be_main.models;
 
-import com.example.sports_participant_be_main.models.dto.GymBrandDto;
+import com.example.sports_participant_be_main.dto.GymBrandDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -33,6 +34,12 @@ public class GymBrand extends GlobalEntityProperties {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
     private Owner owner;
+
+    @OneToMany(mappedBy = "gymBrand")
+    private Set<Location> locations = new HashSet<>();
+
+    @OneToMany(mappedBy = "gymBrand")
+    private Set<Employee> employees = new HashSet<>();
 
     public GymBrandDto ofDto() {
         return GymBrandDto.builder()

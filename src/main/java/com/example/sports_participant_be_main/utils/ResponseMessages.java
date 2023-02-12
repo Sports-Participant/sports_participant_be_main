@@ -30,13 +30,12 @@ public class ResponseMessages {
     }
 
     public enum GymBrand {
-        GYM_BRAND_EXISTS("Gym brand already exists")
+        GYM_BRAND_EXISTS("Gym brand already exists"),
+        NOT_FOUND("Gym brand not found"),
         ;
 
         public final String message;
-        GymBrand(String message) {
-            this.message = message;
-        }
+        GymBrand(String message) { this.message = message; }
     }
 
     public enum Other {
@@ -45,6 +44,26 @@ public class ResponseMessages {
 
         public final String message;
         Other(String message) {
+            this.message = message;
+        }
+    }
+
+    public enum Security {
+        USER_NOT_FOUND("User not found")
+        ;
+
+        public final String message;
+        Security(String message) {
+            this.message = message;
+        }
+    }
+
+    public enum Location {
+        LOCATION_EXISTS("Location already exists")
+        ;
+
+        public final String message;
+        Location(String message) {
             this.message = message;
         }
     }

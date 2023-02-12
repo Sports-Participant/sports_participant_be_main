@@ -4,7 +4,7 @@ import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
 import com.example.sports_participant_be_main.security.Role;
 import com.example.sports_participant_be_main.utils.ResponseMessages;
-import com.example.sports_participant_be_main.utils.exceptions.OwnerNotFoundException;
+import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,9 +23,9 @@ public class OwnerService {
 
     public Owner save(Owner owner) {
         ownerRepo.findOwnerByEmail(owner.getEmail())
-                .orElseThrow(() -> {
-                    log.error(ResponseMessages.Owner.OWNER_EXISTS.message);
-                    throw new OwnerNotFoundException();
+                .ifPresent((item) -> {
+                    log.error(ResponseMessages.Owner.OWNER_EXISTS.message + " email={}", owner.getEmail());
+                    throw new OwnerAlreadyExistsException();
                 });
 
         owner.setRole(Role.OWNER);
@@ -37,12 +37,7 @@ public class OwnerService {
         return this.ownerRepo.findOwnerById(ownerId);
     }
 
-    public Owner getOwnerByEmail(String email) {
-        return ownerRepo
-                .findOwnerByEmail(email)
-                .orElseThrow(() -> {
-                    log.error(ResponseMessages.Owner.NOT_FOUND.message);
-                    return new OwnerNotFoundException();
-                });
+    public Optional<Owner> findOwnerByEmail(String email) {
+        return ownerRepo.findOwnerByEmail(email);
     }
 }

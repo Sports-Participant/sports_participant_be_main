@@ -1,55 +1,47 @@
-package com.example.sports_participant_be_main.models.dto;
+package com.example.sports_participant_be_main.dto;
 
-import com.example.sports_participant_be_main.models.Owner;
+import com.example.sports_participant_be_main.models.Employee;
 import com.example.sports_participant_be_main.security.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
-import java.util.Collection;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Data
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OwnerDto {
+public class EmployeeDto {
 
     private UUID id;
 
     @NonNull
     private String firstname;
 
-    @NonNull
+    @NotNull
     private String lastname;
 
-    @NonNull
+    @NotNull
     @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
     private String email;
 
-    @NonNull
+    @NotNull
     private String password;
 
-    private String country;
-
-    private String city;
-
-    @NonNull
+    @NotNull
     private String phoneNumber;
 
+    @NotNull
     private Role role;
 
-    private Collection<UUID> gymBrandsId;
-
-    public Owner ofEntity(){
-        return Owner.builder()
+    public Employee ofEntity(){
+        return Employee.builder()
                 .id(this.id)
                 .firstname(this.firstname)
                 .lastname(this.lastname)
                 .email(this.email)
                 .password(this.password)
-                .country(this.country)
-                .city(this.city)
                 .phoneNumber(this.phoneNumber)
                 .role(this.role)
                 .build()

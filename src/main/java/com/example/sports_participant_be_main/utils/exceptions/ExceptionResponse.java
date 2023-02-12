@@ -1,4 +1,4 @@
-package com.example.sports_participant_be_main.utils;
+package com.example.sports_participant_be_main.utils.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

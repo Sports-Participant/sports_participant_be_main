@@ -1,10 +1,10 @@
 package com.example.sports_participant_be_main.utils.exceptions.handlers;
 
-import com.example.sports_participant_be_main.utils.ExceptionResponse;
-import com.example.sports_participant_be_main.utils.exceptions.GymBrandHasAlreadyExistsException;
-import com.example.sports_participant_be_main.utils.exceptions.InternalException;
-import com.example.sports_participant_be_main.utils.exceptions.OwnerAlreadyExistsException;
-import com.example.sports_participant_be_main.utils.exceptions.OwnerNotFoundException;
+import com.example.sports_participant_be_main.utils.exceptions.ExceptionResponse;
+import com.example.sports_participant_be_main.utils.exceptions.gym_brand.GymBrandIsAlreadyExistsException;
+import com.example.sports_participant_be_main.utils.exceptions.other.InternalException;
+import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerAlreadyExistsException;
+import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(GymBrandHasAlreadyExistsException.class)
+    @ExceptionHandler(GymBrandIsAlreadyExistsException.class)
     public ResponseEntity<ExceptionResponse> handleGymBrandHasAlreadyExistsException(Exception exception) {
         return new ResponseEntity<>(
                 new ExceptionResponse(exception.getMessage(), ZonedDateTime.now()),

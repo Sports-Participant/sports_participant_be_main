@@ -1,8 +1,9 @@
-package com.example.sports_participant_be_main.models.dto;
+package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.GymBrand;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Data
@@ -13,10 +14,10 @@ public class GymBrandDto {
 
     private UUID id;
 
-    @NonNull
+    @NotNull
     private String name;
 
-    @NonNull
+    @NotNull
     private UUID ownerId;
 
     public GymBrand ofEntity() {
