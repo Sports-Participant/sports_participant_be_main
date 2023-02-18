@@ -22,6 +22,7 @@ public class UserService {
         List<User> users = new ArrayList<>();
         ownerService.findOwnerByEmail(email).ifPresent(owner -> {
             users.add(new User(
+                    owner.getId(),
                     owner.getEmail(),
                     owner.getPassword(),
                     Collections.singleton(owner.getRole())
@@ -30,6 +31,7 @@ public class UserService {
         });
         employeeService.findEmployeeByEmail(email).ifPresent(employee -> {
             users.add(new User(
+                    employee.getId(),
                     employee.getEmail(),
                     employee.getPassword(),
                     Collections.singleton(employee.getRole())
