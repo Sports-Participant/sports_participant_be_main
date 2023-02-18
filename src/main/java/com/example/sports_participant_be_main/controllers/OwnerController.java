@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -19,14 +18,6 @@ import java.util.UUID;
 public class OwnerController {
 
     private final OwnerService ownerService;
-
-    @PostMapping
-    public ResponseEntity<OwnerDto> add(@Valid @RequestBody OwnerDto ownerDto){
-        return new ResponseEntity<>(
-                ownerService.save(ownerDto.ofEntity()).ofDto(),
-                HttpStatus.CREATED
-        );
-    }
 
     @GetMapping("/{owner_id}")
     public ResponseEntity<OwnerDto> getById(@PathVariable("owner_id") UUID ownerId) {

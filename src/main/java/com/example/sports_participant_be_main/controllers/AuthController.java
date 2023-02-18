@@ -1,5 +1,6 @@
 package com.example.sports_participant_be_main.controllers;
 
+import com.example.sports_participant_be_main.dto.OwnerDto;
 import com.example.sports_participant_be_main.security.AuthService;
 import com.example.sports_participant_be_main.security.jwt.JwtRequest;
 import com.example.sports_participant_be_main.security.jwt.JwtResponse;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.security.auth.message.AuthException;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,6 +25,12 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest authRequest) throws AuthException {
         final JwtResponse token = authService.login(authRequest);
+        return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("register")
+    public ResponseEntity<JwtResponse> register(@Valid @RequestBody OwnerDto ownerDto) throws AuthException {
+        final JwtResponse token = authService.register(ownerDto.ofEntity());
         return ResponseEntity.ok(token);
     }
 

@@ -31,12 +31,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .httpBasic().disable()
-                .csrf().disable()
+                .cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(
                         authz -> authz
-                                .antMatchers("/auth/login", "/auth/token", "/owners").permitAll()
+                                .antMatchers("/auth/token", "/auth/register", "/auth/login").permitAll()
                                 .antMatchers(HttpMethod.POST, "/staff/{staff_id}/gym_brands/{gym_brand_id}/employee")
                                     .hasAnyAuthority("OWNER", "ADMIN")
                                 .anyRequest().authenticated()
