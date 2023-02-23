@@ -5,6 +5,7 @@ import com.example.sports_participant_be_main.utils.exceptions.gym_brand.GymBran
 import com.example.sports_participant_be_main.utils.exceptions.other.InternalException;
 import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerAlreadyExistsException;
 import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerNotFoundException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -53,6 +54,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 new ExceptionResponse(exception.getMessage(), ZonedDateTime.now()),
                 HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ExceptionResponse> handleExpiredJwtException(Exception exception) {
+        return new ResponseEntity<>(
+                new ExceptionResponse(exception.getMessage(), ZonedDateTime.now()),
+                HttpStatus.UNAUTHORIZED
         );
     }
 }
