@@ -27,7 +27,7 @@ public class LocationRoomDto {
     @NotNull
     private UUID location_id;
 
-    private Location.Status status;
+    private LocationRoom.Status status;
 
     public LocationRoom ofEntity(){
         return LocationRoom.builder()

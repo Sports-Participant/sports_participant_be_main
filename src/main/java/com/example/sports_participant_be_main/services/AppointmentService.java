@@ -31,7 +31,7 @@ public class AppointmentService {
                 throw new LocationRoomNotFoundException(roomId);
             }));
 
-
+        appointment.setStatus(Appointment.Status.ACTIVE);
         return this.appointmentRepo.save(appointment);
     }
 }

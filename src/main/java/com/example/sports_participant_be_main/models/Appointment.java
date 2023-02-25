@@ -44,10 +44,25 @@ public class Appointment extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private int durationInMinutes;
 
+    @Column(name = "status")
+    @EqualsAndHashCode.Include
+    @Enumerated(EnumType.STRING)
+    private Appointment.Status status;
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private LocationRoom room;
+
+    @AllArgsConstructor
+    public enum Status {
+        ACTIVE("ACTIVE"),
+        BANNED("BANNED"),
+        DISABLED("DISABLED"),
+        FROZEN("FROZEN"),
+        ;
+
+        private final String value;
+    }
 
     // кімната, активність і то подібне
 
@@ -60,6 +75,7 @@ public class Appointment extends GlobalEntityProperties {
                 .date_time(this.dateTime)
                 .duration_in_minutes(this.durationInMinutes)
                 .room_id(this.room.getId())
+                .status(this.status)
                 .build()
                 ;
     }
