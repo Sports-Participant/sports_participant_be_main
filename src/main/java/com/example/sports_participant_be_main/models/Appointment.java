@@ -44,6 +44,11 @@ public class Appointment extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private int durationInMinutes;
 
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    private LocationRoom room;
+
     // кімната, активність і то подібне
 
     public AppointmentDto ofDto() {
@@ -54,6 +59,7 @@ public class Appointment extends GlobalEntityProperties {
                 .location_id(this.location.getId())
                 .date_time(this.dateTime)
                 .duration_in_minutes(this.durationInMinutes)
+                .room_id(this.room.getId())
                 .build()
                 ;
     }

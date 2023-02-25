@@ -69,4 +69,14 @@ public class ResponseMessages {
             this.message = message;
         }
     }
+
+    public enum LocationRoom {
+        NOT_FOUND("Location room not found"),
+        ;
+
+        public final String message;
+        LocationRoom(String message) {
+            this.message = message;
+        }
+    }
 }

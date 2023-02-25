@@ -1,26 +1,21 @@
 package com.example.sports_participant_be_main.models;
 
-import com.example.sports_participant_be_main.dto.LocationDto;
+import com.example.sports_participant_be_main.dto.LocationRoomDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Builder(toBuilder = true)
-@Table(
-        name = "locations",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"street", "street_number"})}
-)
+@Table(name = "location_rooms")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
-public class Location extends GlobalEntityProperties {
+public class LocationRoom extends GlobalEntityProperties {
 
     @Id
     @GeneratedValue(generator = "hibernate-uuid")
@@ -29,54 +24,49 @@ public class Location extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(name = "street", nullable = false)
+    @Column(name = "name", nullable = false)
     @EqualsAndHashCode.Include
-    private String street;
+    private String name;
 
-    @Column(name = "street_number", nullable = false)
+    @Column(name = "description")
     @EqualsAndHashCode.Include
-    private Integer streetNumber;
+    private String description;
 
-    @Column(name = "capacity", nullable = false)
+    @Column(name = "room_number")
+    @EqualsAndHashCode.Include
+    private Integer roomNumber;
+
+    @Column(name = "capacity")
     @EqualsAndHashCode.Include
     private Integer capacity;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
-    private GymBrand gymBrand;
-
-    @ManyToMany(mappedBy = "locations")
-    private Set<Client> clients = new HashSet<>();
+    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+    private Location location;
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
     @Enumerated(EnumType.STRING)
     private Location.Status status;
 
-    @OneToMany(mappedBy = "location")
-    private Set<Appointment> appointments = new HashSet<>();
-
-    @OneToMany(mappedBy = "location")
-    private Set<LocationRoom> rooms = new HashSet<>();
-
     @AllArgsConstructor
     public enum Status {
         ACTIVE("ACTIVE"),
-        BANNED("BANNED"),
-        DISABLED("DISABLED"),
-        FROZEN("FROZEN"),
+        CLOSED("BANNED"),
+        UNDER_REPAIR("UNDER_REPAIR"),
         ;
 
         private final String value;
     }
 
-    public LocationDto ofDto() {
-        return LocationDto.builder()
+    public LocationRoomDto ofDto() {
+        return LocationRoomDto.builder()
                 .id(this.id)
-                .street(this.street)
-                .streetNumber(streetNumber)
+                .name(this.name)
+                .description(this.description)
+                .room_number(this.roomNumber)
                 .capacity(capacity)
-                .gym_brand_id(this.gymBrand.getId())
+                .location_id(this.location.getId())
                 .status(this.status)
                 .build()
                 ;

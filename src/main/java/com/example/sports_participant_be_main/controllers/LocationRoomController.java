@@ -1,6 +1,7 @@
 package com.example.sports_participant_be_main.controllers;
 
 import com.example.sports_participant_be_main.dto.LocationDto;
+import com.example.sports_participant_be_main.dto.LocationRoomDto;
 import com.example.sports_participant_be_main.services.LocationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,20 +13,21 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/gym_brands/{gym_brand_id}/locations/{location_id}/rooms")
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/gym_brands/{gym_brand_id}/locations")
-public class LocationController {
+public class LocationRoomController {
 
     private final LocationService locationService;
 
     @PostMapping
-    public ResponseEntity<LocationDto> add(
+    public ResponseEntity<LocationRoomDto> add(
             @PathVariable("gym_brand_id") UUID gymBrandId,
-            @Valid @RequestBody LocationDto locationDto
+            @PathVariable("location_id") UUID locationId,
+            @Valid @RequestBody LocationRoomDto locationRoomDto
     ) {
         return new ResponseEntity<>(
-                this.locationService.saveLocation(locationDto.ofEntity(), gymBrandId, locationDto.getRoom_ids()).ofDto(),
+                this.locationService.saveLocationRoom(locationRoomDto.ofEntity(), locationRoomDto.getLocation_id()).ofDto(),
                 HttpStatus.CREATED
         );
     }
