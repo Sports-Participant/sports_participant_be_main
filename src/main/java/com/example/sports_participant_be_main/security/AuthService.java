@@ -45,6 +45,7 @@ public class AuthService {
     }
 
     public JwtResponse register(@NotNull Owner owner) {
+        owner.setStatus(Owner.Status.ACTIVE);
         Owner o = this.ownerService.save(owner);
         final User user = userService.getByEmail(owner.getEmail());
         final String accessToken = jwtProvider.generateAccessToken(user);

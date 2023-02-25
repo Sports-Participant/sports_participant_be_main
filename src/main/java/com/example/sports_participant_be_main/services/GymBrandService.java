@@ -3,7 +3,6 @@ package com.example.sports_participant_be_main.services;
 import com.example.sports_participant_be_main.models.GymBrand;
 import com.example.sports_participant_be_main.repositories.GymBrandRepo;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
-import com.example.sports_participant_be_main.utils.ResponseMessages;
 import com.example.sports_participant_be_main.utils.exceptions.gym_brand.GymBrandIsAlreadyExistsException;
 import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerNotFoundException;
 import lombok.AllArgsConstructor;
@@ -23,18 +22,17 @@ public class GymBrandService {
     private final OwnerRepo ownerRepo;
 
     public GymBrand save(GymBrand gymBrand, UUID ownerId) {
-        if (gymBrandRepo.findByName(gymBrand.getName()).isPresent()) {
-            log.error(ResponseMessages.GymBrand.GYM_BRAND_EXISTS.message + " ownerID={}", ownerId);
-            throw new GymBrandIsAlreadyExistsException();
-        }
+        if (gymBrandRepo.findByName(gymBrand.getName()).isPresent())
+            throw new GymBrandIsAlreadyExistsException(gymBrand.getName());
+
 
         gymBrand.setOwner(ownerRepo.
                 findOwnerById(ownerId)
                 .orElseThrow(() -> {
-                    log.error(ResponseMessages.Owner.NOT_FOUND.message + " ownerID={}", ownerId);
-                    throw new OwnerNotFoundException();
+                    throw new OwnerNotFoundException(ownerId);
                 }));
 
+        gymBrand.setStatus(GymBrand.Status.ACTIVE);
         return gymBrandRepo.save(gymBrand);
     }
 

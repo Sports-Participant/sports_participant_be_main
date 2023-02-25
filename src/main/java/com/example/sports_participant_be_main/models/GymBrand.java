@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -41,11 +40,28 @@ public class GymBrand extends GlobalEntityProperties {
     @OneToMany(mappedBy = "gymBrand")
     private Set<Employee> employees = new HashSet<>();
 
+    @Column(name = "status")
+    @EqualsAndHashCode.Include
+    @Enumerated(EnumType.STRING)
+    private GymBrand.Status status;
+
+    @AllArgsConstructor
+    public enum Status {
+        ACTIVE("ACTIVE"),
+        BANNED("BANNED"),
+        DISABLED("DISABLED"),
+        FROZEN("FROZEN"),
+        ;
+
+        private final String value;
+    }
+
     public GymBrandDto ofDto() {
         return GymBrandDto.builder()
                 .id(this.id)
                 .name(this.name)
-                .ownerId(this.owner.getId())
+                .owner_id(this.owner.getId())
+                .status(this.status)
                 .build()
                 ;
     }

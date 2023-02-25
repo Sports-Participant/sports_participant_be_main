@@ -18,12 +18,15 @@ public class GymBrandDto {
     private String name;
 
     @NotNull
-    private UUID ownerId;
+    private UUID owner_id;
+
+    private GymBrand.Status status;
 
     public GymBrand ofEntity() {
         return GymBrand.builder()
                 .id(this.id)
                 .name(this.name)
+                .status(this.status)
                 .build()
                 ;
     }

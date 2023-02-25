@@ -1,10 +1,13 @@
 package com.example.sports_participant_be_main.models;
 
 import com.example.sports_participant_be_main.dto.LocationDto;
+import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -17,7 +20,7 @@ import java.util.UUID;
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
-public class Location {
+public class Location extends GlobalEntityProperties {
 
     @Id
     @GeneratedValue(generator = "hibernate-uuid")
@@ -42,13 +45,36 @@ public class Location {
     @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
     private GymBrand gymBrand;
 
+    @ManyToMany(mappedBy = "locations")
+    private Set<Client> clients = new HashSet<>();
+
+    @Column(name = "status")
+    @EqualsAndHashCode.Include
+    @Enumerated(EnumType.STRING)
+    private Location.Status status;
+
+    @OneToMany(mappedBy = "location")
+    private Set<Appointment> appointments = new HashSet<>();
+
+    @AllArgsConstructor
+    public enum Status {
+        ACTIVE("ACTIVE"),
+        BANNED("BANNED"),
+        DISABLED("DISABLED"),
+        FROZEN("FROZEN"),
+        ;
+
+        private final String value;
+    }
+
     public LocationDto ofDto() {
         return LocationDto.builder()
                 .id(this.id)
                 .street(this.street)
                 .streetNumber(streetNumber)
                 .capacity(capacity)
-                .gymBrandId(this.gymBrand.getId())
+                .gym_brand_id(this.gymBrand.getId())
+                .status(this.status)
                 .build()
                 ;
     }

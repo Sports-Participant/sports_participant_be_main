@@ -1,52 +1,57 @@
 package com.example.sports_participant_be_main.dto;
 
-import com.example.sports_participant_be_main.models.Employee;
-import com.example.sports_participant_be_main.security.Role;
+import com.example.sports_participant_be_main.models.Client;
 import lombok.*;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDto {
+public class ClientDto {
 
     private UUID id;
 
-    @NonNull
+    @NotNull
     private String firstname;
 
     @NotNull
     private String lastname;
 
     @NotNull
-    @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
     private String email;
 
-    @NotNull
     private String password;
+
+    private String country;
+
+    private String city;
 
     @NotNull
     private String phoneNumber;
 
-    @NotNull
-    private Role role;
+    private Client.Status status;
 
-    private Employee.Status status;
+    private Boolean is_disabled = false;
 
-    public Employee ofEntity(){
-        return Employee.builder()
+    private Set<UUID> location_ids = new HashSet<>();
+
+    public Client ofEntity(){
+        return Client.builder()
                 .id(this.id)
                 .firstname(this.firstname)
                 .lastname(this.lastname)
                 .email(this.email)
                 .password(this.password)
+                .country(this.country)
+                .city(this.city)
                 .phoneNumber(this.phoneNumber)
-                .role(this.role)
                 .status(this.status)
+                .is_disabled(this.is_disabled)
                 .build()
                 ;
     }

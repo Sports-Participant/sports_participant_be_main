@@ -5,7 +5,7 @@ public class ResponseMessages {
     public enum Owner {
         NOT_FOUND("Owner not found"),
         CREATED("Owner has been created"),
-        OWNER_EXISTS("Owner already exists")
+        ALREADY_EXISTS("Owner already exists")
         ;
 
         public final String message;
@@ -30,7 +30,7 @@ public class ResponseMessages {
     }
 
     public enum GymBrand {
-        GYM_BRAND_EXISTS("Gym brand already exists"),
+        ALREADY_EXISTS("Gym brand already exists"),
         NOT_FOUND("Gym brand not found"),
         ;
 
@@ -59,7 +59,9 @@ public class ResponseMessages {
     }
 
     public enum Location {
-        LOCATION_EXISTS("Location already exists")
+        ALREADY_EXISTS("Location already exists"),
+        NOT_FOUND("Location not found"),
+        ANY_LOCATION_NOT_FOUND("None of the locations were found")
         ;
 
         public final String message;

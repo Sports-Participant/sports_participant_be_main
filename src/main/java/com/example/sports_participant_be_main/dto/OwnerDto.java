@@ -38,6 +38,8 @@ public class OwnerDto {
 
     private Role role;
 
+    private Owner.Status status;
+
     public Owner ofEntity(){
         return Owner.builder()
                 .id(this.id)
@@ -49,6 +51,7 @@ public class OwnerDto {
                 .city(this.city)
                 .phoneNumber(this.phoneNumber)
                 .role(this.role)
+                .status(this.status)
                 .build()
                 ;
     }

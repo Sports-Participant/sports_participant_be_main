@@ -3,7 +3,6 @@ package com.example.sports_participant_be_main.services;
 import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
 import com.example.sports_participant_be_main.security.Role;
-import com.example.sports_participant_be_main.utils.ResponseMessages;
 import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +23,7 @@ public class OwnerService {
     public Owner save(Owner owner) {
         ownerRepo.findOwnerByEmail(owner.getEmail())
                 .ifPresent((item) -> {
-                    log.error(ResponseMessages.Owner.OWNER_EXISTS.message + " email={}", owner.getEmail());
-                    throw new OwnerAlreadyExistsException();
+                    throw new OwnerAlreadyExistsException(owner.getEmail());
                 });
 
         owner.setRole(Role.OWNER);
