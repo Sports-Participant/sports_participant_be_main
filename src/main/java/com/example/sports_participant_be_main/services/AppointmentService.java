@@ -3,6 +3,7 @@ package com.example.sports_participant_be_main.services;
 import com.example.sports_participant_be_main.models.*;
 import com.example.sports_participant_be_main.repositories.AppointmentRepo;
 import com.example.sports_participant_be_main.utils.exceptions.location.LocationNotFoundException;
+import com.example.sports_participant_be_main.utils.exceptions.location.location_room.LocationRoomNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,18 @@ public class AppointmentService {
     private final LocationService locationService;
     private final AppointmentRepo appointmentRepo;
 
-    public Appointment save(Appointment appointment, UUID location_id) {
-        Optional<Location> location = this.locationService.findById(location_id);
+    public Appointment save(Appointment appointment, UUID locationId, UUID roomId) {
+        Optional<Location> location = this.locationService.findLocationById(locationId);
 
         appointment.setLocation(location.orElseThrow(() -> {
-            throw new LocationNotFoundException(location_id);
+            throw new LocationNotFoundException(locationId);
         }));
+
+        if (roomId != null)
+            appointment.setRoom(this.locationService.findLocationRoomById(roomId).orElseThrow(() -> {
+                throw new LocationRoomNotFoundException(roomId);
+            }));
+
 
         return this.appointmentRepo.save(appointment);
     }

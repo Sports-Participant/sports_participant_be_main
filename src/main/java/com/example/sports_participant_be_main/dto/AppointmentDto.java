@@ -28,6 +28,9 @@ public class AppointmentDto {
     @NotNull
     private int duration_in_minutes;
 
+    @NotNull
+    private UUID room_id;
+
     public Appointment ofEntity(){
         return Appointment.builder()
                 .id(this.id)

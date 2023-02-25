@@ -26,7 +26,7 @@ public class AppointmentController {
             @Valid @RequestBody AppointmentDto appointmentDto
     ) {
         return new ResponseEntity<>(
-                this.appointmentService.save(appointmentDto.ofEntity(), locationId).ofDto(),
+                this.appointmentService.save(appointmentDto.ofEntity(), locationId, appointmentDto.getRoom_id()).ofDto(),
                 HttpStatus.CREATED
         );
     }
