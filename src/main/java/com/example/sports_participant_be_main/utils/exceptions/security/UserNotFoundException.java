@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.UUID;
+
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 @Slf4j
 public class UserNotFoundException extends RuntimeException{
@@ -13,5 +15,10 @@ public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException() {
         super(ResponseMessages.Security.USER_NOT_FOUND.message);
         log.error(this.message, this);
+    }
+
+    public UserNotFoundException(UUID id) {
+        super(ResponseMessages.Security.USER_NOT_FOUND.message + " id=" + id);
+        log.error(message + " id=" + id, this);
     }
 }

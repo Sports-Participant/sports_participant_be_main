@@ -11,10 +11,7 @@ import javax.validation.constraints.Email;
 import java.util.*;
 
 @Entity
-@Table(name = "owners",
-        indexes = {
-            @Index(name = "email_index", columnList = "email")
-        })
+@Table(name = "owners")
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -38,7 +35,7 @@ public class Owner extends GlobalEntityProperties {
     private String lastname;
 
     @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
-    @Column(name = "email", length=60, nullable = false, unique = true)
+    @Column(name = "email", length = 60, nullable = false, unique = true)
     @EqualsAndHashCode.Include
     private String email;
 
@@ -60,10 +57,27 @@ public class Owner extends GlobalEntityProperties {
 
     @Column(name = "role", updatable = false)
     @EqualsAndHashCode.Include
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name = "status")
+    @EqualsAndHashCode.Include
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToMany(mappedBy = "owner")
     private Set<GymBrand> gymBrands = new HashSet<>();
+
+    @AllArgsConstructor
+    public enum Status {
+        ACTIVE("ACTIVE"),
+        BANNED("BANNED"),
+        DISABLED("DISABLED"),
+        FROZEN("FROZEN"),
+        ;
+
+        private final String value;
+    }
 
     public OwnerDto ofDto() {
         return OwnerDto.builder()
@@ -76,7 +90,10 @@ public class Owner extends GlobalEntityProperties {
                 .city(this.city)
                 .phoneNumber(this.phoneNumber)
                 .role(this.role)
+                .status(this.status)
                 .build()
                 ;
     }
+
+
 }

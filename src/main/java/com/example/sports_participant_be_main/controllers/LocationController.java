@@ -14,14 +14,13 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/staff/{staff_id}/gym_brands/{gym_brand_id}/locations")
+@RequestMapping("/gym_brands/{gym_brand_id}/locations")
 public class LocationController {
 
     private final LocationService locationService;
 
     @PostMapping
     public ResponseEntity<LocationDto> add(
-            @PathVariable("staff_id") UUID staffId,
             @PathVariable("gym_brand_id") UUID gymBrandId,
             @Valid @RequestBody LocationDto locationDto
     ) {

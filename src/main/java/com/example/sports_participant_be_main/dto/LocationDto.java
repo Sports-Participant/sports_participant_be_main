@@ -24,7 +24,10 @@ public class LocationDto {
     private Integer capacity;
 
     @NotNull
-    private UUID gymBrandId;
+    private UUID gym_brand_id;
+
+
+    private Location.Status status;
 
     public Location ofEntity() {
         return Location.builder()
@@ -32,6 +35,7 @@ public class LocationDto {
                 .street(this.street)
                 .streetNumber(streetNumber)
                 .capacity(this.capacity)
+                .status(this.status)
                 .build()
                 ;
     }

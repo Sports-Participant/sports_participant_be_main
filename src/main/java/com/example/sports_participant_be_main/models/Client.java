@@ -1,13 +1,14 @@
 package com.example.sports_participant_be_main.models;
 
-import com.example.sports_participant_be_main.dto.EmployeeDto;
-import com.example.sports_participant_be_main.security.Role;
+import com.example.sports_participant_be_main.dto.ClientDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,9 +16,9 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "employee")
+@Table(name = "clients")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Employee extends GlobalEntityProperties {
+public class Client extends GlobalEntityProperties {
 
     @Id
     @GeneratedValue(generator = "hibernate-uuid")
@@ -39,27 +40,42 @@ public class Employee extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private String email;
 
-    @Column(name = "password", nullable = false)
+    // Поки налл
+    @Column(name = "password", nullable = true)
     @EqualsAndHashCode.Include
     private String password;
 
-    @Column(name = "phone_number", nullable = false, unique = true)
+    @Column(name = "country")
+    @EqualsAndHashCode.Include
+    private String country;
+
+    @Column(name = "city")
+    @EqualsAndHashCode.Include
+    private String city;
+
+    @Column(name = "phone_number", nullable = false)
     @EqualsAndHashCode.Include
     private String phoneNumber;
-
-    @Column(name = "role")
-    @EqualsAndHashCode.Include
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
-    private GymBrand gymBrand;
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
     @Enumerated(EnumType.STRING)
-    private Employee.Status status;
+    private Client.Status status;
+
+    @Column(name = "is_disabled", nullable = false)
+    @EqualsAndHashCode.Include
+    private Boolean is_disabled = false;
+
+    // посилання на медичну карту якщо вона є, якщо ні, то це поле null
+
+    // масив локацій (бо можуть бути різні підписки на послуги)
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(
+            name = "client_locations",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "location_id"))
+    private Set<Location> locations = new HashSet<>();
+
 
     @AllArgsConstructor
     public enum Status {
@@ -72,16 +88,18 @@ public class Employee extends GlobalEntityProperties {
         private final String value;
     }
 
-    public EmployeeDto ofDto() {
-        return EmployeeDto.builder()
+    public ClientDto ofDto() {
+        return ClientDto.builder()
                 .id(this.id)
                 .firstname(this.firstname)
                 .lastname(this.lastname)
                 .email(this.email)
                 .password(this.password)
+                .country(this.country)
+                .city(this.city)
                 .phoneNumber(this.phoneNumber)
-                .role(this.role)
                 .status(this.status)
+                .is_disabled(this.is_disabled)
                 .build()
                 ;
     }
