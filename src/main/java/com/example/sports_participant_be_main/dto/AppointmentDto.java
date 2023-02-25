@@ -31,6 +31,8 @@ public class AppointmentDto {
     @NotNull
     private UUID room_id;
 
+    private Appointment.Status status;
+
     public Appointment ofEntity(){
         return Appointment.builder()
                 .id(this.id)
@@ -38,6 +40,7 @@ public class AppointmentDto {
                 .text(this.text)
                 .dateTime(this.date_time)
                 .durationInMinutes(this.duration_in_minutes)
+                .status(this.status)
                 .build()
                 ;
     }

@@ -63,7 +63,7 @@ public class Owner extends GlobalEntityProperties {
     @Column(name = "status")
     @EqualsAndHashCode.Include
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Owner.Status status;
 
     @OneToMany(mappedBy = "owner")
     private Set<GymBrand> gymBrands = new HashSet<>();

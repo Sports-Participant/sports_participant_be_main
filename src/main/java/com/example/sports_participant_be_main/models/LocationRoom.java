@@ -47,7 +47,7 @@ public class LocationRoom extends GlobalEntityProperties {
     @Column(name = "status")
     @EqualsAndHashCode.Include
     @Enumerated(EnumType.STRING)
-    private Location.Status status;
+    private LocationRoom.Status status;
 
     @AllArgsConstructor
     public enum Status {

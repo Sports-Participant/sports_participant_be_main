@@ -59,6 +59,9 @@ public class Location extends GlobalEntityProperties {
     @OneToMany(mappedBy = "location")
     private Set<LocationRoom> rooms = new HashSet<>();
 
+    @OneToMany(mappedBy = "location")
+    private Set<Schedule> schedules = new HashSet<>();
+
     @AllArgsConstructor
     public enum Status {
         ACTIVE("ACTIVE"),
@@ -74,8 +77,8 @@ public class Location extends GlobalEntityProperties {
         return LocationDto.builder()
                 .id(this.id)
                 .street(this.street)
-                .streetNumber(streetNumber)
-                .capacity(capacity)
+                .streetNumber(this.streetNumber)
+                .capacity(this.capacity)
                 .gym_brand_id(this.gymBrand.getId())
                 .status(this.status)
                 .build()
