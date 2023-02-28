@@ -1,5 +1,6 @@
 package com.example.sports_participant_be_main.models;
 
+import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ActivityPrice {
+public class ActivityPrice extends GlobalEntityProperties {
 
     @Id
     @GeneratedValue(generator = "hibernate-uuid")
@@ -50,22 +51,27 @@ public class ActivityPrice {
     @EqualsAndHashCode.Include
     @DecimalMin(value = "0.0", message = "Installment amount cannot be less than 0.0")
     @Digits(integer = 10, fraction = 2, message = "Installment amount can have at most 10 digits and 2 decimals")
-    private Double installmentAmount = 0.0;
+    private Double installmentAmount = 0.0; // price / installmentPeriodNumber
 
     @Column(name = "installment_period_in_days", nullable = false)
     @Min(value = 0, message = "Installment period in days cannot be less than 0")
     @EqualsAndHashCode.Include
     private Integer installmentPeriodInDays = 0; // period every 7 days
 
-    @Column(name = "installment_periods_amount", nullable = false)
+    @Column(name = "installment_period_number", nullable = false)
     @Min(value = 0, message = "Installment period amount cannot be less than 0")
     @EqualsAndHashCode.Include
-    private Integer installmentPeriodAmount = 0; // 4 time for 7 days = 28 days
+    private Integer installmentPeriodNumber = 0; // 4 time for 7 days = 28 days
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
+    private Activity activity;
 
     @AllArgsConstructor
     public enum PaymentStatus {
         FREE("FREE"),
         PAID("PAID"),
+        INSTALLMENT("INSTALLMENT"),
         ;
 
         private final String value;

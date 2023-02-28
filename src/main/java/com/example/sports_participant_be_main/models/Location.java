@@ -62,6 +62,9 @@ public class Location extends GlobalEntityProperties {
     @OneToMany(mappedBy = "location")
     private Set<Schedule> schedules = new HashSet<>();
 
+    @OneToMany(mappedBy = "location")
+    private Set<Activity> activities = new HashSet<>();
+
     @AllArgsConstructor
     public enum Status {
         ACTIVE("ACTIVE"),
