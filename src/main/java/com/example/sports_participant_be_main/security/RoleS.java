@@ -4,13 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 @RequiredArgsConstructor
-public enum Role implements GrantedAuthority {
-
-    ADMIN("ADMIN"),
-    COACH("COACH"),
-    OWNER("OWNER"),
-    RECEPTIONIST("RECEPTIONIST"),
-    ;
+public class RoleS implements GrantedAuthority {
 
     private final String value;
 

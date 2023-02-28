@@ -1,7 +1,7 @@
 package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.Employee;
-import com.example.sports_participant_be_main.security.Role;
+import com.example.sports_participant_be_main.security.RoleS;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -32,9 +32,6 @@ public class EmployeeDto {
     @NotNull
     private String phoneNumber;
 
-    @NotNull
-    private Role role;
-
     private Employee.Status status;
 
     public Employee ofEntity(){
@@ -45,7 +42,6 @@ public class EmployeeDto {
                 .email(this.email)
                 .password(this.password)
                 .phoneNumber(this.phoneNumber)
-                .role(this.role)
                 .status(this.status)
                 .build()
                 ;

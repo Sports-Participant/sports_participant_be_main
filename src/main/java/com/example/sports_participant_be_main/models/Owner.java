@@ -1,7 +1,6 @@
 package com.example.sports_participant_be_main.models;
 
 import com.example.sports_participant_be_main.dto.OwnerDto;
-import com.example.sports_participant_be_main.security.Role;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -55,10 +54,13 @@ public class Owner extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private String phoneNumber;
 
-    @Column(name = "role", updatable = false)
-    @EqualsAndHashCode.Include
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany
+    @JoinTable (
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
@@ -89,7 +91,6 @@ public class Owner extends GlobalEntityProperties {
                 .country(this.country)
                 .city(this.city)
                 .phoneNumber(this.phoneNumber)
-                .role(this.role)
                 .status(this.status)
                 .build()
                 ;

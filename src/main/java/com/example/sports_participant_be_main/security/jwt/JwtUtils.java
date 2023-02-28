@@ -1,6 +1,6 @@
 package com.example.sports_participant_be_main.security.jwt;
 
-import com.example.sports_participant_be_main.security.Role;
+import com.example.sports_participant_be_main.security.RoleS;
 import io.jsonwebtoken.Claims;
 
 import java.util.List;
@@ -17,10 +17,12 @@ public final class JwtUtils {
         return jwtInfoToken;
     }
 
-    private static Set<Role> getRoles(Claims claims) {
+    private static Set<RoleS> getRoles(Claims claims) {
         final List<String> roles = claims.get("roles", List.class);
+        System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+        roles.forEach(System.out::println);
         return roles.stream()
-                .map(Role::valueOf)
+                .map(RoleS::new)
                 .collect(Collectors.toSet());
     }
 

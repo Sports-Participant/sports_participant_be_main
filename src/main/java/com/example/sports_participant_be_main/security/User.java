@@ -1,5 +1,6 @@
 package com.example.sports_participant_be_main.security;
 
+import com.example.sports_participant_be_main.models.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,5 +14,5 @@ public class User {
     private UUID id;
     private String email;
     private String password;
-    private Set<Role> roles;
+    private Set<RoleS> roles;
 }
