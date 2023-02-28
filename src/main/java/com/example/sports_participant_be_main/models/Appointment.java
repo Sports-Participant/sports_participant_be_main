@@ -53,6 +53,10 @@ public class Appointment extends GlobalEntityProperties {
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private LocationRoom room;
 
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
+    private Activity activity;
+
     @AllArgsConstructor
     public enum Status {
         ACTIVE("ACTIVE"),

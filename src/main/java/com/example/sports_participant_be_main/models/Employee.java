@@ -8,6 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -60,6 +62,9 @@ public class Employee extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     @Enumerated(EnumType.STRING)
     private Employee.Status status;
+
+    @ManyToMany
+    private Set<Activity> activities = new HashSet<>();
 
     @AllArgsConstructor
     public enum Status {
