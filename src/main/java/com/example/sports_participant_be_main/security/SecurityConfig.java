@@ -34,10 +34,10 @@ public class SecurityConfig {
                 .cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests(
+                .authorizeRequests(
                         authz -> authz
                                 .antMatchers("/auth/token", "/auth/register", "/auth/login", "/health").permitAll()
-                                .antMatchers(HttpMethod.POST, "/staff/{staff_id}/gym_brands/{gym_brand_id}/employee")
+                                .antMatchers(HttpMethod.POST, "/gym_brands/{gym_brand_id}/employee")
                                     .hasAnyAuthority("OWNER", "ADMIN")
                                 .anyRequest().authenticated()
                                 .and()

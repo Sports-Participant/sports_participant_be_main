@@ -1,13 +1,12 @@
 package com.example.sports_participant_be_main.models;
 
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -52,5 +51,6 @@ public class Activity extends GlobalEntityProperties {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
 }

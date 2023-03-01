@@ -1,6 +1,5 @@
 package com.example.sports_participant_be_main.controllers;
 
-import com.example.sports_participant_be_main.dto.LocationDto;
 import com.example.sports_participant_be_main.dto.LocationRoomDto;
 import com.example.sports_participant_be_main.services.LocationService;
 import lombok.AllArgsConstructor;

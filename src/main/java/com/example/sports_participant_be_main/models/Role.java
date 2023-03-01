@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +27,24 @@ public class Role {
     @Column(name = "name", nullable = false, unique = true)
     @EqualsAndHashCode.Include
     private String name;
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable (
+//            name = "users_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id")
+//
+//    )
+//    private Set<Owner> owners = new HashSet<>();
+//
+//    @ManyToMany(cascade = {CascadeType.REMOVE})
+//    @JoinTable (
+//            name = "users_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id")
+//
+//    )
+//    private Set<Employee> employees = new HashSet<>();
 }
 
 

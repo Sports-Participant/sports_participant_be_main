@@ -3,14 +3,12 @@ package com.example.sports_participant_be_main.services;
 import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.models.Role;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
-import com.example.sports_participant_be_main.security.RoleS;
 import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;

@@ -1,11 +1,10 @@
 package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.Employee;
-import com.example.sports_participant_be_main.security.RoleS;
-import lombok.*;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import lombok.*;
+
 import java.util.UUID;
 
 @Data

@@ -3,6 +3,7 @@ package com.example.sports_participant_be_main.security.jwt;
 import com.example.sports_participant_be_main.security.RoleS;
 import io.jsonwebtoken.Claims;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,11 +19,9 @@ public final class JwtUtils {
     }
 
     private static Set<RoleS> getRoles(Claims claims) {
-        final List<String> roles = claims.get("roles", List.class);
-        System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
-        roles.forEach(System.out::println);
+        final List<LinkedHashMap<String, String>> roles = claims.get("roles", List.class);
         return roles.stream()
-                .map(RoleS::new)
+                .map(item -> new RoleS(item.get("authority")))
                 .collect(Collectors.toSet());
     }
 

@@ -1,10 +1,11 @@
 package com.example.sports_participant_be_main.models;
 
 import com.example.sports_participant_be_main.dto.EmployeeDto;
-import com.example.sports_participant_be_main.security.RoleS;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -57,8 +58,9 @@ public class Employee extends GlobalEntityProperties {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private GymBrand gymBrand;
 
     @Column(name = "status")

@@ -1,6 +1,9 @@
 package com.example.sports_participant_be_main.controllers;
 
+import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.models.Role;
+import com.example.sports_participant_be_main.repositories.OwnerRepo;
+import com.example.sports_participant_be_main.services.OwnerService;
 import com.example.sports_participant_be_main.services.RoleService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class HealthCheckController {
 
     private final RoleService roleService;
+    private final OwnerRepo ownerRepo;
 
     @GetMapping
     public String health() {
@@ -30,6 +34,11 @@ public class HealthCheckController {
 //        roleService.save(r2);
 //        roleService.save(r3);
 //        roleService.save(r4);
+
+//        Role r = this.roleService.findByName("OWNER").get();
+//        Owner o = this.ownerRepo.findOwnerByEmail("s.kytsara@gmail.com").get();
+//        o.removeRole(r);
+//        this.ownerRepo.delete(o);
 
         return "alive";
     }
