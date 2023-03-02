@@ -4,6 +4,8 @@ import com.example.sports_participant_be_main.dto.AppointmentDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -55,6 +57,7 @@ public class Appointment extends GlobalEntityProperties {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Activity activity;
 
     @AllArgsConstructor

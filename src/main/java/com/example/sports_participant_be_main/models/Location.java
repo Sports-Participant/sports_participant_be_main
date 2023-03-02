@@ -4,6 +4,8 @@ import com.example.sports_participant_be_main.dto.LocationDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -41,11 +43,13 @@ public class Location extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private Integer capacity;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private GymBrand gymBrand;
 
     @ManyToMany(mappedBy = "locations")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Client> clients = new HashSet<>();
 
     @Column(name = "status")

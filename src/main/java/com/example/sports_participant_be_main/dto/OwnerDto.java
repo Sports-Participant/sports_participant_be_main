@@ -1,7 +1,6 @@
 package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.Owner;
-import com.example.sports_participant_be_main.security.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -36,8 +35,6 @@ public class OwnerDto {
     @NotNull
     private String phoneNumber;
 
-    private Role role;
-
     private Owner.Status status;
 
     public Owner ofEntity(){
@@ -50,7 +47,6 @@ public class OwnerDto {
                 .country(this.country)
                 .city(this.city)
                 .phoneNumber(this.phoneNumber)
-                .role(this.role)
                 .status(this.status)
                 .build()
                 ;

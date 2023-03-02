@@ -1,11 +1,13 @@
 package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.Employee;
-import com.example.sports_participant_be_main.security.Role;
-import lombok.*;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+
+import com.example.sports_participant_be_main.models.Role;
+import lombok.*;
+
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -32,10 +34,10 @@ public class EmployeeDto {
     @NotNull
     private String phoneNumber;
 
-    @NotNull
-    private Role role;
-
     private Employee.Status status;
+
+    @NotNull
+    private Set<UUID> role_ids;
 
     public Employee ofEntity(){
         return Employee.builder()
@@ -45,7 +47,6 @@ public class EmployeeDto {
                 .email(this.email)
                 .password(this.password)
                 .phoneNumber(this.phoneNumber)
-                .role(this.role)
                 .status(this.status)
                 .build()
                 ;

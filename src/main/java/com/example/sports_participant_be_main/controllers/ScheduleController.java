@@ -1,8 +1,6 @@
 package com.example.sports_participant_be_main.controllers;
 
-import com.example.sports_participant_be_main.dto.LocationDto;
 import com.example.sports_participant_be_main.dto.ScheduleDto;
-import com.example.sports_participant_be_main.models.Schedule;
 import com.example.sports_participant_be_main.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

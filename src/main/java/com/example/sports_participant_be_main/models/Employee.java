@@ -1,10 +1,11 @@
 package com.example.sports_participant_be_main.models;
 
 import com.example.sports_participant_be_main.dto.EmployeeDto;
-import com.example.sports_participant_be_main.security.Role;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -49,13 +50,17 @@ public class Employee extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private String phoneNumber;
 
-    @Column(name = "role")
-    @EqualsAndHashCode.Include
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany
+    @JoinTable (
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private GymBrand gymBrand;
 
     @Column(name = "status")
@@ -65,6 +70,10 @@ public class Employee extends GlobalEntityProperties {
 
     @ManyToMany
     private Set<Activity> activities = new HashSet<>();
+
+    public void removeRole(Role role){
+        this.roles.remove(role);
+    }
 
     @AllArgsConstructor
     public enum Status {
@@ -85,7 +94,6 @@ public class Employee extends GlobalEntityProperties {
                 .email(this.email)
                 .password(this.password)
                 .phoneNumber(this.phoneNumber)
-                .role(this.role)
                 .status(this.status)
                 .build()
                 ;

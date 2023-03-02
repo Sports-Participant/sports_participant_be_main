@@ -4,6 +4,8 @@ import com.example.sports_participant_be_main.dto.GymBrandDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -30,8 +32,9 @@ public class GymBrand extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private String name;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Owner owner;
 
     @OneToMany(mappedBy = "gymBrand")

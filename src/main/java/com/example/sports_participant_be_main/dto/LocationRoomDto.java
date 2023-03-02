@@ -1,6 +1,5 @@
 package com.example.sports_participant_be_main.dto;
 
-import com.example.sports_participant_be_main.models.Location;
 import com.example.sports_participant_be_main.models.LocationRoom;
 import lombok.*;
 

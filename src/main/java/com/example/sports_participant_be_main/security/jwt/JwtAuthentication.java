@@ -1,6 +1,6 @@
 package com.example.sports_participant_be_main.security.jwt;
 
-import com.example.sports_participant_be_main.security.Role;
+import com.example.sports_participant_be_main.security.RoleS;
 import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +14,7 @@ public class JwtAuthentication implements Authentication {
     private boolean authenticated;
     private String username;
     private String firstName;
-    private Set<Role> roles;
+    private Set<RoleS> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { return roles; }

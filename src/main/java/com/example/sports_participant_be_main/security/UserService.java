@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class UserService {
                     owner.getId(),
                     owner.getEmail(),
                     owner.getPassword(),
-                    Collections.singleton(owner.getRole())
+                    Stream.of(owner.getRole()).map(item -> new RoleS(item.getName())).collect(Collectors.toSet())
                 )
             );
         });
@@ -34,7 +36,7 @@ public class UserService {
                     employee.getId(),
                     employee.getEmail(),
                     employee.getPassword(),
-                    Collections.singleton(employee.getRole())
+                    employee.getRoles().stream().map(item -> new RoleS(item.getName())).collect(Collectors.toSet())
                 )
             );
         });

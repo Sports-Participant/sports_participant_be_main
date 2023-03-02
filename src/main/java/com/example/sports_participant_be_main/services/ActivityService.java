@@ -1,8 +1,6 @@
 package com.example.sports_participant_be_main.services;
 
 import com.example.sports_participant_be_main.models.Activity;
-import com.example.sports_participant_be_main.models.Appointment;
-import com.example.sports_participant_be_main.models.Employee;
 import com.example.sports_participant_be_main.models.Location;
 import com.example.sports_participant_be_main.repositories.ActivityPriceRepo;
 import com.example.sports_participant_be_main.repositories.ActivityRepo;
@@ -11,9 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
