@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +30,7 @@ public class OwnerService {
         Role role = this.roleService.findByName("OWNER").orElseThrow(() -> {
             throw new RuntimeException();
         });
-        owner.setRoles(Stream.of(role).collect(Collectors.toSet()));
+        owner.setRole(role);
         owner.setPassword(passwordEncoder.encode(owner.getPassword()));
         return ownerRepo.save(owner);
     }

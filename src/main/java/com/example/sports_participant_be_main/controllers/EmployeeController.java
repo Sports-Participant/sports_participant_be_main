@@ -22,7 +22,7 @@ public class EmployeeController {
             @Valid @RequestBody EmployeeDto employeeDto
     ) {
         return new ResponseEntity<>(
-                this.employeeService.save(employeeDto.ofEntity(), gymBrandId).ofDto(),
+                this.employeeService.save(employeeDto.ofEntity(), gymBrandId, employeeDto.getRole_ids()).ofDto(),
                 HttpStatus.CREATED
         );
     }

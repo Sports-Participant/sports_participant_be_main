@@ -3,8 +3,11 @@ package com.example.sports_participant_be_main.dto;
 import com.example.sports_participant_be_main.models.Employee;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+
+import com.example.sports_participant_be_main.models.Role;
 import lombok.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -32,6 +35,9 @@ public class EmployeeDto {
     private String phoneNumber;
 
     private Employee.Status status;
+
+    @NotNull
+    private Set<UUID> role_ids;
 
     public Employee ofEntity(){
         return Employee.builder()

@@ -28,6 +28,9 @@ public class Role {
     @EqualsAndHashCode.Include
     private String name;
 
+    @OneToMany(mappedBy = "role")
+    private Set<Owner> owners = new HashSet<>();
+
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable (
 //            name = "users_roles",

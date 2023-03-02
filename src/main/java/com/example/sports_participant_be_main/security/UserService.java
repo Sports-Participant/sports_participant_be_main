@@ -27,7 +27,7 @@ public class UserService {
                     owner.getId(),
                     owner.getEmail(),
                     owner.getPassword(),
-                    owner.getRoles().stream().map(item -> new RoleS(item.getName())).collect(Collectors.toSet())
+                    Stream.of(owner.getRole()).map(item -> new RoleS(item.getName())).collect(Collectors.toSet())
                 )
             );
         });

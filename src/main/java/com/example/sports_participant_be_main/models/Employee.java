@@ -71,6 +71,10 @@ public class Employee extends GlobalEntityProperties {
     @ManyToMany
     private Set<Activity> activities = new HashSet<>();
 
+    public void removeRole(Role role){
+        this.roles.remove(role);
+    }
+
     @AllArgsConstructor
     public enum Status {
         ACTIVE("ACTIVE"),

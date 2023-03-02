@@ -37,8 +37,10 @@ public class HealthCheckController {
 
 //        Role r = this.roleService.findByName("OWNER").get();
 //        Owner o = this.ownerRepo.findOwnerByEmail("s.kytsara@gmail.com").get();
-//        o.removeRole(r);
+//        o.setRole(null);
+////        o.removeRole(r);
 //        this.ownerRepo.delete(o);
+
 
         return "alive";
     }

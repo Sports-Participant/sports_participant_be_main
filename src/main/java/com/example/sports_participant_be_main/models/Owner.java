@@ -54,13 +54,9 @@ public class Owner extends GlobalEntityProperties {
     @EqualsAndHashCode.Include
     private String phoneNumber;
 
-    @ManyToMany
-    @JoinTable (
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "owner_role_id", nullable = false, foreignKey = @ForeignKey(name = "fk_owner_role"))
+    private Role role;
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
@@ -69,10 +65,6 @@ public class Owner extends GlobalEntityProperties {
 
     @OneToMany(mappedBy = "owner")
     private Set<GymBrand> gymBrands = new HashSet<>();
-
-    public void removeRole(Role role){
-        this.roles.remove(role);
-    }
 
     @AllArgsConstructor
     public enum Status {
