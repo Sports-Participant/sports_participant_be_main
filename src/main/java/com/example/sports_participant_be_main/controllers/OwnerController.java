@@ -22,7 +22,7 @@ public class OwnerController {
     @GetMapping("/{owner_id}")
     public ResponseEntity<OwnerDto> getById(@PathVariable("owner_id") UUID ownerId) {
         return new ResponseEntity<>(
-                ownerService.getById(ownerId)
+                ownerService.findById(ownerId)
                         .orElseThrow(OwnerNotFoundException::new)
                         .ofDto(),
                 HttpStatus.OK

@@ -38,7 +38,7 @@ public class LocationService {
         if (l.isPresent())
             throw new LocationIsAlreadyExistsException(location.getStreet(), location.getStreetNumber());
 
-        location.setRooms(this.findAllLocationRoomsById(room_ids));
+        location.setRooms(this.getAllLocationRoomsById(room_ids));
         location.setGymBrand(gymBrand);
         return this.locationRepo.save(location);
     }
@@ -70,12 +70,20 @@ public class LocationService {
         return this.locationRoomRepo.findById(id);
     }
 
-    public Set<LocationRoom> findAllLocationRoomsById(Collection<UUID> ids) {
+    public Set<LocationRoom> getAllLocationRoomsById(Collection<UUID> ids) {
         Set<LocationRoom> rooms = this.locationRoomRepo.getAllByIdIn(ids);
 
         if (rooms.size() != ids.size())
             log.warn("The count of location ids and the count of locations not equal.");
 
         return rooms;
+    }
+
+    public Set<Location> getAllLocationByGymBrandId(UUID gymBrandId) {
+        GymBrand gymBrand = gymBrandService.findById(gymBrandId).orElseThrow(() -> {
+            throw new GymBrandNotFoundException(gymBrandId);
+        });
+
+        return this.locationRepo.getAllByGymBrandId(gymBrand.getId());
     }
 }

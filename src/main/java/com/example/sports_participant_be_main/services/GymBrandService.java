@@ -2,7 +2,6 @@ package com.example.sports_participant_be_main.services;
 
 import com.example.sports_participant_be_main.models.GymBrand;
 import com.example.sports_participant_be_main.repositories.GymBrandRepo;
-import com.example.sports_participant_be_main.repositories.OwnerRepo;
 import com.example.sports_participant_be_main.utils.exceptions.gym_brand.GymBrandIsAlreadyExistsException;
 import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerNotFoundException;
 import lombok.AllArgsConstructor;
@@ -19,15 +18,14 @@ import java.util.UUID;
 public class GymBrandService {
 
     private final GymBrandRepo gymBrandRepo;
-    private final OwnerRepo ownerRepo;
+    private final OwnerService ownerService;
 
     public GymBrand save(GymBrand gymBrand, UUID ownerId) {
         if (gymBrandRepo.findByName(gymBrand.getName()).isPresent())
             throw new GymBrandIsAlreadyExistsException(gymBrand.getName());
 
-
-        gymBrand.setOwner(ownerRepo.
-                findOwnerById(ownerId)
+        gymBrand.setOwner(ownerService.
+                findById(ownerId)
                 .orElseThrow(() -> {
                     throw new OwnerNotFoundException(ownerId);
                 }));
@@ -43,5 +41,4 @@ public class GymBrandService {
     public Optional<GymBrand> findById(UUID id) {
         return this.gymBrandRepo.findById(id);
     }
-
 }

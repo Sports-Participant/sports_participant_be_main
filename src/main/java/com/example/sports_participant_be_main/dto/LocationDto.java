@@ -27,6 +27,7 @@ public class LocationDto {
     @NotNull
     private UUID gym_brand_id;
 
+    @NotNull
     private Set<UUID> room_ids;
 
     private Location.Status status;
