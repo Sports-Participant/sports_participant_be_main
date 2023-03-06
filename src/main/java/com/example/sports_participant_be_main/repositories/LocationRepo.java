@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface LocationRepo extends JpaRepository<Location, UUID> {
     Optional<Location> findLocationByStreetAndStreetNumber(String street, Integer streetNumber);
     Set<Location> findLocationsByIdIn(Set<UUID> ids);
+
+    Set<Location> getAllByGymBrandId(UUID id);
 }

@@ -30,7 +30,11 @@ public class RoleService {
         return this.roleRepo.findByName(name);
     }
 
-    public Set<Role> findRoleByIdIn(Set<UUID> ids) {
+    public Set<Role> getRolesByIdIn(Set<UUID> ids) {
         return this.roleRepo.findRoleByIdIn(ids);
+    }
+
+    public Set<Role> getRolesByEmployeeId(UUID id) {
+        return this.roleRepo.getRolesByEmployeeId(id);
     }
 }

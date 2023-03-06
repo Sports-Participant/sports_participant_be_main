@@ -1,5 +1,6 @@
 package com.example.sports_participant_be_main.models;
 
+import com.example.sports_participant_be_main.dto.RoleDto;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -47,7 +48,16 @@ public class Role {
 //            inverseJoinColumns = @JoinColumn(name = "role_id")
 //
 //    )
-//    private Set<Employee> employees = new HashSet<>();
+    @ManyToMany
+    private Set<Employee> employees = new HashSet<>();
+
+    public RoleDto ofDto(){
+        return RoleDto.builder()
+                .id(this.id)
+                .name(this.name)
+                .build()
+                ;
+    }
 }
 
 

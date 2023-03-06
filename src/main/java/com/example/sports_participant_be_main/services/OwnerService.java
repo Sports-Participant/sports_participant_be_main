@@ -1,15 +1,18 @@
 package com.example.sports_participant_be_main.services;
 
+import com.example.sports_participant_be_main.models.GymBrand;
 import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.models.Role;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
 import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerAlreadyExistsException;
+import com.example.sports_participant_be_main.utils.exceptions.owner.OwnerNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -35,11 +38,16 @@ public class OwnerService {
         return ownerRepo.save(owner);
     }
 
-    public Optional<Owner> getById(UUID ownerId) {
+    public Optional<Owner> findById(UUID ownerId) {
         return this.ownerRepo.findOwnerById(ownerId);
     }
 
     public Optional<Owner> findOwnerByEmail(String email) {
         return ownerRepo.findOwnerByEmail(email);
+    }
+
+    public Set<GymBrand> getAllGymBrandsByOwnerId(UUID id){
+        Owner owner = this.findById(id).orElseThrow(() -> {throw new OwnerNotFoundException(id);});
+        return owner.getGymBrands();
     }
 }

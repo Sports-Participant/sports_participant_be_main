@@ -29,7 +29,7 @@ public class EmployeeService {
 
     public Employee save(Employee employee, UUID gymBrandId, Set<UUID> roleIds) {
         GymBrand gymBrand = gymBrandService.findById(gymBrandId).orElseThrow(() -> {throw new GymBrandNotFoundException(gymBrandId);});
-        Set<Role> roles = roleService.findRoleByIdIn(roleIds);
+        Set<Role> roles = roleService.getRolesByIdIn(roleIds);
 
         if (roles.size() != roleIds.size())
             log.warn("The count of role ids and the count of roles not equal.");
@@ -38,5 +38,14 @@ public class EmployeeService {
         employee.setGymBrand(gymBrand);
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         return this.employeeRepo.save(employee);
+    }
+
+    public Optional<Employee> findById(UUID id) {
+        return this.employeeRepo.findById(id);
+    }
+
+    public GymBrand findGymBrandByEmployeeId(UUID id) {
+        Employee employee = this.findById(id).orElseThrow(() -> {throw new RuntimeException("Not found employee");});
+        return employee.getGymBrand();
     }
 }
