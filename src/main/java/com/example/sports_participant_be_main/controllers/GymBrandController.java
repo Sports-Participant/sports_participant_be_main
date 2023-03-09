@@ -29,7 +29,7 @@ public class GymBrandController {
     @PostMapping("")
     public ResponseEntity<GymBrandDto> add(@Valid @RequestBody GymBrandDto gymBrandDto) {
         return new ResponseEntity<>(
-                gymBrandService.save(gymBrandDto.ofEntity(), gymBrandDto.getOwner_id()).ofDto(),
+                gymBrandService.save(gymBrandDto.ofEntity(), gymBrandDto.getOwnerId()).ofDto(),
                 HttpStatus.CREATED
         );
     }

@@ -86,7 +86,7 @@ public class Location extends GlobalEntityProperties {
                 .street(this.street)
                 .streetNumber(this.streetNumber)
                 .capacity(this.capacity)
-                .gym_brand_id(this.gymBrand.getId())
+                .gymBrandId(this.gymBrand.getId())
                 .status(this.status)
                 .build()
                 ;

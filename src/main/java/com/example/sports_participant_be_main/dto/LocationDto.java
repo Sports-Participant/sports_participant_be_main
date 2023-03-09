@@ -25,10 +25,10 @@ public class LocationDto {
     private Integer capacity;
 
     @NotNull
-    private UUID gym_brand_id;
+    private UUID gymBrandId;
 
     @NotNull
-    private Set<UUID> room_ids;
+    private Set<UUID> roomIds;
 
     private Location.Status status;
 

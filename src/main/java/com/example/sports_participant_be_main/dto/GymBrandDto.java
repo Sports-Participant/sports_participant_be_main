@@ -18,7 +18,7 @@ public class GymBrandDto {
     private String name;
 
     @NotNull
-    private UUID owner_id;
+    private UUID ownerId;
 
     private GymBrand.Status status;
 

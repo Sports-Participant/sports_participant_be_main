@@ -63,7 +63,7 @@ public class GymBrand extends GlobalEntityProperties {
         return GymBrandDto.builder()
                 .id(this.id)
                 .name(this.name)
-                .owner_id(this.owner.getId())
+                .ownerId(this.owner.getId())
                 .status(this.status)
                 .build()
                 ;

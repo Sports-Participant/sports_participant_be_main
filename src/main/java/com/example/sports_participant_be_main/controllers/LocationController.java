@@ -28,7 +28,7 @@ public class LocationController {
             @Valid @RequestBody LocationDto locationDto
     ) {
         return new ResponseEntity<>(
-                this.locationService.saveLocation(locationDto.ofEntity(), gymBrandId, locationDto.getRoom_ids()).ofDto(),
+                this.locationService.saveLocation(locationDto.ofEntity(), gymBrandId, locationDto.getRoomIds()).ofDto(),
                 HttpStatus.CREATED
         );
     }
