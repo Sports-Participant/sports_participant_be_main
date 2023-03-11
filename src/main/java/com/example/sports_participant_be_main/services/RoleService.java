@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -36,5 +37,9 @@ public class RoleService {
 
     public Set<Role> getRolesByEmployeeId(UUID id) {
         return this.roleRepo.getRolesByEmployeeId(id);
+    }
+
+    public List<Role> getAll() {
+        return this.roleRepo.findAll();
     }
 }

@@ -36,8 +36,7 @@ public class EmployeeDto {
 
     private Employee.Status status;
 
-    @NotNull
-    private Set<UUID> role_ids;
+    private Set<UUID> roleIds;
 
     public Employee ofEntity(){
         return Employee.builder()

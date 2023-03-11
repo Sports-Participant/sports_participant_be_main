@@ -28,7 +28,9 @@ public class EmployeeService {
     }
 
     public Employee save(Employee employee, UUID gymBrandId, Set<UUID> roleIds) {
-        GymBrand gymBrand = gymBrandService.findById(gymBrandId).orElseThrow(() -> {throw new GymBrandNotFoundException(gymBrandId);});
+        GymBrand gymBrand = gymBrandService.findById(gymBrandId).orElseThrow(() -> {
+            throw new GymBrandNotFoundException(gymBrandId);
+        });
         Set<Role> roles = roleService.getRolesByIdIn(roleIds);
 
         if (roles.size() != roleIds.size())
@@ -45,7 +47,16 @@ public class EmployeeService {
     }
 
     public GymBrand findGymBrandByEmployeeId(UUID id) {
-        Employee employee = this.findById(id).orElseThrow(() -> {throw new RuntimeException("Not found employee");});
+        Employee employee = this.findById(id).orElseThrow(() -> {
+            throw new RuntimeException("Not found employee");
+        });
         return employee.getGymBrand();
+    }
+
+    public Set<Employee> getAllByGymBrandId(UUID gymBrandId) {
+        GymBrand gymBrand = gymBrandService.findById(gymBrandId).orElseThrow(() -> {
+            throw new GymBrandNotFoundException(gymBrandId);
+        });
+        return this.employeeRepo.getAllByGymBrandId(gymBrand.getId());
     }
 }
