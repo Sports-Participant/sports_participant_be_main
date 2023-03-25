@@ -18,6 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "clients")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Client extends GlobalEntityProperties {
 
     @Id
@@ -25,45 +26,55 @@ public class Client extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "firstname", nullable = false, length = 20)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String firstname;
 
     @Column(name = "lastname", nullable = false, length = 20)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String lastname;
 
     @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
     @Column(name = "email", length=60, nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String email;
 
     // Поки налл
     @Column(name = "password", nullable = true)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String password;
 
     @Column(name = "country")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String country;
 
     @Column(name = "city")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String city;
 
     @Column(name = "phone_number", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String phoneNumber;
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private Client.Status status;
 
     @Column(name = "is_disabled", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Boolean is_disabled = false;
 
     // посилання на медичну карту якщо вона є, якщо ні, то це поле null

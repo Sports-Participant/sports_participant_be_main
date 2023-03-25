@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -18,6 +20,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Schedule extends GlobalEntityProperties {
 
     @Id
@@ -25,23 +28,28 @@ public class Schedule extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "is_week", nullable = false)
     @EqualsAndHashCode.Include
-    private Boolean isWeek = false;
+    @ToString.Include
+    private Boolean isWeekend = false;
 
     @Column(name = "day", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private Schedule.Day day;
 
-    @Column(name = "open_time", nullable = false)
+    @Column(name = "open_time")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private LocalTime openTime;
 
-    @Column(name = "close_time", nullable = false)
+    @Column(name = "close_time")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private LocalTime closeTime;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -66,11 +74,11 @@ public class Schedule extends GlobalEntityProperties {
     public ScheduleDto ofDto() {
         return ScheduleDto.builder()
                 .id(this.id)
-                .is_week(this.isWeek)
+                .isWeekend(this.isWeekend)
                 .day(this.day)
-                .open_time(this.openTime)
-                .close_time(this.closeTime)
-                .location_id(this.location.getId())
+                .openTime(Timestamp.valueOf(this.openTime.atDate(LocalDate.now())))
+                .closeTime(Timestamp.valueOf(this.closeTime.atDate(LocalDate.now())))
+                .locationId(this.location.getId())
                 .build()
                 ;
     }

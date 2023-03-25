@@ -1,9 +1,12 @@
 package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.Appointment;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
@@ -20,16 +23,30 @@ public class AppointmentDto {
     private String text;
 
     @NotNull
-    private UUID location_id;
+    private UUID locationId;
 
     @NotNull
-    private LocalDateTime date_time;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
     @NotNull
-    private int duration_in_minutes;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime start;
 
     @NotNull
-    private UUID room_id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime end;
+
+    @NotNull
+    private UUID roomId;
+
+    @NotNull
+    private UUID activityId;
+
+    @NotNull
+    private UUID employeeId;
 
     private Appointment.Status status;
 
@@ -38,8 +55,9 @@ public class AppointmentDto {
                 .id(this.id)
                 .title(this.title)
                 .text(this.text)
-                .dateTime(this.date_time)
-                .durationInMinutes(this.duration_in_minutes)
+                .date(this.date)
+                .start(this.start)
+                .end(this.end)
                 .status(this.status)
                 .build()
                 ;

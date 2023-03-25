@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Role {
 
     @Id
@@ -23,10 +24,12 @@ public class Role {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "name", nullable = false, unique = true)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String name;
 
     @OneToMany(mappedBy = "role")

@@ -4,7 +4,9 @@ import com.example.sports_participant_be_main.models.Schedule;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Data
@@ -16,27 +18,37 @@ public class ScheduleDto {
     private UUID id;
 
     @NotNull
-    private Boolean is_week;
+    private Boolean isWeekend;
 
     @NotNull
     private Schedule.Day day;
 
-    @NotNull
-    private LocalTime open_time;
+    private Timestamp openTime;
+
+    private Timestamp closeTime;
 
     @NotNull
-    private LocalTime close_time;
+    private UUID locationId;
 
-    @NotNull
-    private UUID location_id;
-
-    public Schedule ofEntity(){
+    public Schedule ofEntity() {
         return Schedule.builder()
                 .id(this.id)
-                .isWeek(this.is_week)
+                .isWeekend(this.isWeekend)
                 .day(this.day)
-                .openTime(this.open_time)
-                .closeTime(this.close_time)
+                .openTime(LocalTime
+                        .parse(this.openTime
+                                .toLocalDateTime()
+                                .toLocalTime()
+                                .format(DateTimeFormatter.ofPattern("HH:mm"))
+                        )
+                )
+                .closeTime(LocalTime
+                        .parse(this.closeTime
+                                .toLocalDateTime()
+                                .toLocalTime()
+                                .format(DateTimeFormatter.ofPattern("HH:mm"))
+                        )
+                )
                 .build()
                 ;
     }

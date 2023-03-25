@@ -1,5 +1,6 @@
 package com.example.sports_participant_be_main.models;
 
+import com.example.sports_participant_be_main.dto.ActivityDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import javax.persistence.*;
 import lombok.*;
@@ -18,6 +19,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+// add rooms
 public class Activity extends GlobalEntityProperties {
 
     @Id
@@ -25,14 +28,17 @@ public class Activity extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "title", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String title;
 
     @Column(name = "description")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String description;
 
     @OneToMany(mappedBy = "activity")
@@ -53,4 +59,14 @@ public class Activity extends GlobalEntityProperties {
     @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
+
+    public ActivityDto ofDto() {
+        return ActivityDto.builder()
+                .id(this.id)
+                .title(this.title)
+                .description(this.description)
+                .locationId(this.location.getId())
+                .build()
+                ;
+    }
 }

@@ -19,6 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "gym_brands")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class GymBrand extends GlobalEntityProperties {
 
     @Id
@@ -26,10 +27,12 @@ public class GymBrand extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "name", unique = true, nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String name;
 
     @ManyToOne
@@ -45,6 +48,7 @@ public class GymBrand extends GlobalEntityProperties {
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private GymBrand.Status status;
 
