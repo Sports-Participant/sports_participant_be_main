@@ -1,5 +1,6 @@
 package com.example.sports_participant_be_main.models;
 
+import com.example.sports_participant_be_main.dto.ActivityPriceDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class ActivityPrice extends GlobalEntityProperties {
 
     @Id
@@ -26,31 +28,37 @@ public class ActivityPrice extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "payment_status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
-    private ActivityPrice.PaymentStatus paymentStatus;
+    private PaymentType paymentType;
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private ActivityPrice.Status status;
 
     @Column(name = "day")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private ActivityPrice.Day day;
 
     @Column(name = "price", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     @DecimalMin(value = "0.0", message = "Price cannot be less than 0.0")
     @Digits(integer = 10, fraction = 2, message = "Price can have at most 10 digits and 2 decimals")
     private Double price = 0.0;
 
     @Column(name = "installment_amount", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     @DecimalMin(value = "0.0", message = "Installment amount cannot be less than 0.0")
     @Digits(integer = 10, fraction = 2, message = "Installment amount can have at most 10 digits and 2 decimals")
     private Double installmentAmount = 0.0; // price / installmentPeriodNumber
@@ -58,11 +66,13 @@ public class ActivityPrice extends GlobalEntityProperties {
     @Column(name = "installment_period_in_days", nullable = false)
     @Min(value = 0, message = "Installment period in days cannot be less than 0")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer installmentPeriodInDays = 0; // period every 7 days
 
     @Column(name = "installment_period_number", nullable = false)
     @Min(value = 0, message = "Installment period amount cannot be less than 0")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer installmentPeriodNumber = 0; // 4 time for 7 days = 28 days
 
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -71,7 +81,7 @@ public class ActivityPrice extends GlobalEntityProperties {
     private Activity activity;
 
     @AllArgsConstructor
-    public enum PaymentStatus {
+    public enum PaymentType {
         FREE("FREE"),
         PAID("PAID"),
         INSTALLMENT("INSTALLMENT"),
@@ -102,5 +112,20 @@ public class ActivityPrice extends GlobalEntityProperties {
         ;
 
         private final String value;
+    }
+
+    public ActivityPriceDto ofDto() {
+        return ActivityPriceDto.builder()
+                .id(this.id)
+                .paymentType(this.paymentType)
+                .status(this.status)
+                .day(this.day)
+                .price(this.price)
+                .installmentAmount(this.installmentAmount)
+                .installmentPeriodInDays(this.installmentPeriodInDays)
+                .installmentPeriodNumber(this.installmentPeriodNumber)
+                .activityId(this.activity.getId())
+                .build()
+                ;
     }
 }

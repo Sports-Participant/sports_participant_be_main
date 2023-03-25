@@ -16,6 +16,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Owner extends GlobalEntityProperties {
 
     @Id
@@ -23,35 +24,43 @@ public class Owner extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "firstname", nullable = false, length = 20)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String firstname;
 
     @Column(name = "lastname", nullable = false, length = 20)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String lastname;
 
     @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
     @Column(name = "email", length = 60, nullable = false, unique = true)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String email;
 
     @Column(name = "password", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String password;
 
     @Column(name = "country")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String country;
 
     @Column(name = "city")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String city;
 
     @Column(name = "phone_number", nullable = false, unique = true)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String phoneNumber;
 
     @ManyToOne
@@ -60,6 +69,7 @@ public class Owner extends GlobalEntityProperties {
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private Owner.Status status;
 

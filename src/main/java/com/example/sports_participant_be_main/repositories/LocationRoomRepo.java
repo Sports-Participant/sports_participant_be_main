@@ -11,4 +11,5 @@ import java.util.UUID;
 @Repository
 public interface LocationRoomRepo extends JpaRepository<LocationRoom, UUID> {
     Set<LocationRoom> getAllByIdIn(Collection<UUID> ids);
+    Set<LocationRoom> getAllByLocationId(UUID id);
 }

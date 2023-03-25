@@ -25,7 +25,7 @@ public class ClientController {
             @Valid @RequestBody ClientDto clientDto
     ) {
         return new ResponseEntity<>(
-                this.clientService.save(clientDto.ofEntity(), clientDto.getLocation_ids()).ofDto(),
+                this.clientService.save(clientDto.ofEntity(), clientDto.getLocationIds()).ofDto(),
                 HttpStatus.CREATED
         );
     }

@@ -38,7 +38,7 @@ public class ClientDto {
 
     private Boolean is_disabled = false;
 
-    private Set<UUID> location_ids = new HashSet<>();
+    private Set<UUID> locationIds = new HashSet<>();
 
     public Client ofEntity(){
         return Client.builder()

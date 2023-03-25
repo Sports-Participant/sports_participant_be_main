@@ -20,6 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "employee")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Employee extends GlobalEntityProperties {
 
     @Id
@@ -27,27 +28,33 @@ public class Employee extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "firstname", nullable = false, length = 20)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String firstname;
 
     @Column(name = "lastname", nullable = false, length = 20)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String lastname;
 
     @Email(regexp = ".+@.+\\..+", message = "Invalid email format")
     @Column(name = "email", length=60, nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String email;
 
     @Column(name = "password", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String password;
 
     @Column(name = "phone_number", nullable = false, unique = true)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String phoneNumber;
 
     @ManyToMany
@@ -66,10 +73,14 @@ public class Employee extends GlobalEntityProperties {
     @Column(name = "status")
     @EqualsAndHashCode.Include
     @Enumerated(EnumType.STRING)
+    @ToString.Include
     private Employee.Status status;
 
     @ManyToMany
     private Set<Activity> activities = new HashSet<>();
+
+    @OneToMany(mappedBy = "employee")
+    private Set<Appointment> appointments = new HashSet<>();
 
     public void removeRole(Role role){
         this.roles.remove(role);

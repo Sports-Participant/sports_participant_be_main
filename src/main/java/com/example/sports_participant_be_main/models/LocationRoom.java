@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,6 +18,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @Table(name = "location_rooms")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 public class LocationRoom extends GlobalEntityProperties {
 
@@ -24,22 +27,27 @@ public class LocationRoom extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "name", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String name;
 
     @Column(name = "description")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String description;
 
     @Column(name = "room_number")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer roomNumber;
 
     @Column(name = "capacity")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer capacity;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -49,8 +57,12 @@ public class LocationRoom extends GlobalEntityProperties {
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private LocationRoom.Status status;
+
+    @OneToMany(mappedBy = "room")
+    private Set<Appointment> appointments = new HashSet<>();
 
     @AllArgsConstructor
     public enum Status {
@@ -67,9 +79,9 @@ public class LocationRoom extends GlobalEntityProperties {
                 .id(this.id)
                 .name(this.name)
                 .description(this.description)
-                .room_number(this.roomNumber)
+                .roomNumber(this.roomNumber)
                 .capacity(capacity)
-                .location_id(this.location.getId())
+                .locationId(this.location.getId())
                 .status(this.status)
                 .build()
                 ;

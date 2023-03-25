@@ -25,7 +25,7 @@ public class LocationService {
     private final LocationRoomRepo locationRoomRepo;
     private final GymBrandService gymBrandService;
 
-    public Location saveLocation(Location location, UUID gymBrandId, Set<UUID> room_ids) {
+    public Location saveLocation(Location location, UUID gymBrandId, Set<UUID> roomIds) {
         GymBrand gymBrand = gymBrandService.findById(gymBrandId).orElseThrow(() -> {
             throw new GymBrandNotFoundException(gymBrandId);
         });
@@ -38,15 +38,15 @@ public class LocationService {
         if (l.isPresent())
             throw new LocationIsAlreadyExistsException(location.getStreet(), location.getStreetNumber());
 
-        location.setRooms(this.getAllLocationRoomsById(room_ids));
+        location.setRooms(this.getAllLocationRoomsById(roomIds));
         location.setGymBrand(gymBrand);
         return this.locationRepo.save(location);
     }
 
-    public Set<Location> getLocationsByIds(Set<UUID> location_ids) {
-        Set<Location> locations = this.locationRepo.findLocationsByIdIn(location_ids);
+    public Set<Location> getLocationsByIds(Set<UUID> locationIds) {
+        Set<Location> locations = this.locationRepo.findLocationsByIdIn(locationIds);
 
-        if (locations.size() != location_ids.size()){
+        if (locations.size() != locationIds.size()){
             log.warn("The count of location ids and the count of locations not equal.");
         }
 
@@ -63,6 +63,7 @@ public class LocationService {
         });
 
         locationRoom.setLocation(location);
+        locationRoom.setStatus(LocationRoom.Status.ACTIVE);
         return this.locationRoomRepo.save(locationRoom);
     }
 
@@ -85,5 +86,13 @@ public class LocationService {
         });
 
         return this.locationRepo.getAllByGymBrandId(gymBrand.getId());
+    }
+
+    public Set<LocationRoom> getAllLocationRoomsByLocationId(UUID locationId) {
+        Location location = this.findLocationById(locationId).orElseThrow(() -> {
+            throw new LocationNotFoundException(locationId);
+        });
+
+        return this.locationRoomRepo.getAllByLocationId(location.getId());
     }
 }

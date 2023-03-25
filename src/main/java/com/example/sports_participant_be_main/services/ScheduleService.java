@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -30,7 +32,7 @@ public class ScheduleService {
                     log.warn("Schedule on day={} for location_id={}", schedule.getDay(), locationId);
                     item.setOpenTime(schedule.getOpenTime());
                     item.setCloseTime(schedule.getCloseTime());
-                    item.setIsWeek(schedule.getIsWeek());
+                    item.setIsWeekend(schedule.getIsWeekend());
                     this.scheduleRepo.save(item);
                     isExists.set(true);
                 });
@@ -39,5 +41,14 @@ public class ScheduleService {
         if (isExists.get()) return schedule;
         schedule.setLocation(location);
         return this.scheduleRepo.save(schedule);
+    }
+
+    public Collection<Schedule> saveAll(Set<Schedule> schedules, UUID locationId) {
+        Location location = this.locationService.findLocationById(locationId).orElseThrow(() -> {
+            throw new LocationNotFoundException(locationId);
+        });
+
+        schedules.forEach(item -> item.setLocation(location));
+        return this.scheduleRepo.saveAll(schedules);
     }
 }

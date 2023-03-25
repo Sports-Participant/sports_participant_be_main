@@ -14,6 +14,9 @@ import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/*
+    В майбутньому зробити транзакцію на створення локації та її розклад
+ */
 @RestController
 @AllArgsConstructor
 @Slf4j

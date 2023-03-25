@@ -39,7 +39,12 @@ public class EmployeeService {
         employee.setRoles(roles);
         employee.setGymBrand(gymBrand);
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+        employee.setStatus(Employee.Status.ACTIVE);
         return this.employeeRepo.save(employee);
+    }
+
+    public Set<Employee> getAllByIds(Set<UUID> employeeIds) {
+        return this.employeeRepo.getAllByIdIn(employeeIds);
     }
 
     public Optional<Employee> findById(UUID id) {

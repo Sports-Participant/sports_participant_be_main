@@ -8,7 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Table(name = "appointments")
 public class Appointment extends GlobalEntityProperties {
 
@@ -24,41 +26,58 @@ public class Appointment extends GlobalEntityProperties {
     @GeneratedValue(generator = "hibernate-uuid")
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
+    @ToString.Include
     private UUID id;
 
     @Column(name = "title", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String title;
 
     @Column(name = "text")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String text;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
     private Location location;
 
-    @Column(name = "date_time", nullable = false)
+    @Column(name = "date", nullable = false)
     @EqualsAndHashCode.Include
-    private LocalDateTime dateTime;
+    @ToString.Include
+    private LocalDate date;
 
-    @Column(name = "duration_in_minutes", nullable = false)
+    @Column(name = "start", nullable = false)
     @EqualsAndHashCode.Include
-    private int durationInMinutes;
+    @ToString.Include
+    private LocalTime start;
+
+    @Column(name = "end", nullable = false)
+    @EqualsAndHashCode.Include
+    @ToString.Include
+    private LocalTime end;
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private Appointment.Status status;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private LocationRoom room;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Activity activity;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Employee employee;
 
     @AllArgsConstructor
     public enum Status {
@@ -78,10 +97,12 @@ public class Appointment extends GlobalEntityProperties {
                 .id(this.id)
                 .title(this.title)
                 .text(this.text)
-                .location_id(this.location.getId())
-                .date_time(this.dateTime)
-                .duration_in_minutes(this.durationInMinutes)
-                .room_id(this.room.getId())
+                .locationId(this.location.getId())
+                .date(this.date)
+                .start(this.start)
+                .end(this.end)
+                .roomId(this.room.getId())
+                .employeeId(this.employee.getId())
                 .status(this.status)
                 .build()
                 ;

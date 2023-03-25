@@ -21,6 +21,7 @@ import java.util.UUID;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"street", "street_number"})}
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 public class Location extends GlobalEntityProperties {
 
@@ -29,18 +30,22 @@ public class Location extends GlobalEntityProperties {
     @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
+    @ToString.Include
     private UUID id;
 
     @Column(name = "street", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private String street;
 
     @Column(name = "street_number", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer streetNumber;
 
     @Column(name = "capacity", nullable = false)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer capacity;
 
     @ManyToOne
@@ -54,6 +59,7 @@ public class Location extends GlobalEntityProperties {
 
     @Column(name = "status")
     @EqualsAndHashCode.Include
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     private Location.Status status;
 
