@@ -1,9 +1,11 @@
 package com.example.sports_participant_be_main.dto;
 
 import com.example.sports_participant_be_main.models.Client;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -36,7 +38,14 @@ public class ClientDto {
 
     private Client.Status status;
 
-    private Boolean is_disabled = false;
+    private Boolean isDisabled = false;
+
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dob;
+
+    @NotNull
+    private Client.Gender gender;
 
     private Set<UUID> locationIds = new HashSet<>();
 
@@ -51,7 +60,9 @@ public class ClientDto {
                 .city(this.city)
                 .phoneNumber(this.phoneNumber)
                 .status(this.status)
-                .is_disabled(this.is_disabled)
+                .isDisabled(this.isDisabled)
+                .dob(this.dob)
+                .gender(this.gender)
                 .build()
                 ;
     }

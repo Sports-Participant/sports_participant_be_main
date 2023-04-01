@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -75,7 +76,18 @@ public class Client extends GlobalEntityProperties {
     @Column(name = "is_disabled", nullable = false)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Boolean is_disabled = false;
+    private Boolean isDisabled = false;
+
+    @Column(name = "dob", nullable = false)
+    @EqualsAndHashCode.Include
+    @ToString.Include
+    private LocalDate dob;
+
+    @Column(name = "gender", nullable = false)
+    @EqualsAndHashCode.Include
+    @ToString.Include
+    @Enumerated(EnumType.STRING)
+    private Client.Gender gender;
 
     // посилання на медичну карту якщо вона є, якщо ні, то це поле null
 
@@ -91,9 +103,19 @@ public class Client extends GlobalEntityProperties {
     @AllArgsConstructor
     public enum Status {
         ACTIVE("ACTIVE"),
-        BANNED("BANNED"),
-        DISABLED("DISABLED"),
-        FROZEN("FROZEN"),
+        PAUSED("PAUSED"),
+        PENDING("PENDING"),
+        BLOCKED("BLOCKED"),
+        ;
+
+        private final String value;
+    }
+
+    @AllArgsConstructor
+    public enum Gender {
+        MALE("MALE"),
+        FEMALE("FEMALE"),
+        OTHER("OTHER"),
         ;
 
         private final String value;
@@ -110,7 +132,9 @@ public class Client extends GlobalEntityProperties {
                 .city(this.city)
                 .phoneNumber(this.phoneNumber)
                 .status(this.status)
-                .is_disabled(this.is_disabled)
+                .isDisabled(this.isDisabled)
+                .dob(this.dob)
+                .gender(this.gender)
                 .build()
                 ;
     }
