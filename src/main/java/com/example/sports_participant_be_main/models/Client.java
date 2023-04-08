@@ -3,6 +3,7 @@ package com.example.sports_participant_be_main.models;
 import com.example.sports_participant_be_main.dto.ClientDto;
 import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -89,6 +90,9 @@ public class Client extends GlobalEntityProperties {
     @Enumerated(EnumType.STRING)
     private Client.Gender gender;
 
+    @OneToOne(mappedBy = "client")
+    private MedicalCard medicalCard;
+
     // посилання на медичну карту якщо вона є, якщо ні, то це поле null
 
     // масив локацій (бо можуть бути різні підписки на послуги)
@@ -97,6 +101,7 @@ public class Client extends GlobalEntityProperties {
             name = "client_locations",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "location_id"))
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private Set<Location> locations = new HashSet<>();
 
 

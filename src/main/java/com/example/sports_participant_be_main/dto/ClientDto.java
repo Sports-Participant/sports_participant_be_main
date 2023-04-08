@@ -49,6 +49,8 @@ public class ClientDto {
 
     private Set<UUID> locationIds = new HashSet<>();
 
+    private UUID medicalCardId;
+
     public Client ofEntity(){
         return Client.builder()
                 .id(this.id)
