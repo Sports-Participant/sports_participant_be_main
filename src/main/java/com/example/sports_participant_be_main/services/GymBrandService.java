@@ -41,4 +41,8 @@ public class GymBrandService {
     public Optional<GymBrand> findById(UUID id) {
         return this.gymBrandRepo.findById(id);
     }
+
+    public void delete(UUID id) {
+        this.gymBrandRepo.deleteById(id);
+    }
 }

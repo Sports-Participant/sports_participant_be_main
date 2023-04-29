@@ -5,6 +5,8 @@ import com.example.sports_participant_be_main.utils.GlobalEntityProperties;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -90,19 +92,24 @@ public class Client extends GlobalEntityProperties {
     @Enumerated(EnumType.STRING)
     private Client.Gender gender;
 
-    @OneToOne(mappedBy = "client")
+    @OneToOne(mappedBy = "client", cascade = CascadeType.REMOVE)
     private MedicalCard medicalCard;
 
     // посилання на медичну карту якщо вона є, якщо ні, то це поле null
 
     // масив локацій (бо можуть бути різні підписки на послуги)
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "client_locations",
             joinColumns = @JoinColumn(name = "client_id"),
-            inverseJoinColumns = @JoinColumn(name = "location_id"))
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+            inverseJoinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"))
+//    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private Set<Location> locations = new HashSet<>();
+
+//    @PreRemove
+//    private void remove() {
+//        this.locations.clear();
+//    }
 
 
     @AllArgsConstructor

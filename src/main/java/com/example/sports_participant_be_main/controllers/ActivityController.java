@@ -69,4 +69,17 @@ public class ActivityController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping("/{activity_id}")
+    public ResponseEntity<Boolean> delete(
+            @PathVariable("gym_brand_id") UUID gymBrandId,
+            @PathVariable("location_id") UUID locationId,
+            @PathVariable("activity_id") UUID activityId
+    ) {
+        this.activityService.delete(activityId);
+        return new ResponseEntity<>(
+                true,
+                HttpStatus.OK
+        );
+    }
 }

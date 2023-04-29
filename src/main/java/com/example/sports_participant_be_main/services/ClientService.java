@@ -30,14 +30,18 @@ public class ClientService {
 
         if (locations.isEmpty()) throw new AnyLocationNotFoundException(locationIds);
 
+        client.setLocations(locations);
+        client.setStatus(Client.Status.ACTIVE);
+
+        client = this.clientRepo.save(client);
+
         if (client.getIsDisabled() && healthSupplier != HealthSupplier.NONE) {
             IMedicalSupplier medicalHistory = medicalHistoryFactory.getMedicalHistoryService(healthSupplier);
             medicalHistory.save(client);
         }
 
-        client.setLocations(locations);
-        client.setStatus(Client.Status.ACTIVE);
-        return this.clientRepo.save(client);
+
+        return client;
     }
 
     public Set<Client> getAllByLocationId(UUID locationId) {
@@ -50,5 +54,9 @@ public class ClientService {
 
     public Optional<Client> findById(UUID clientId) {
         return this.clientRepo.findById(clientId);
+    }
+
+    public void delete(UUID id) {
+        this.clientRepo.deleteById(id);
     }
 }

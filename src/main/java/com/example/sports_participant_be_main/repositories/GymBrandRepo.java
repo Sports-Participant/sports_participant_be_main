@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface GymBrandRepo extends JpaRepository<GymBrand, UUID> {
     Collection<GymBrand> getAllByOwnerId(UUID ownerID);
     Optional<GymBrand> findByName(String name);
+    void deleteById(UUID id);
 }

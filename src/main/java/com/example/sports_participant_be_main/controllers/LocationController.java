@@ -48,4 +48,16 @@ public class LocationController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping("{location_id}")
+    public ResponseEntity<Boolean> delete(
+            @PathVariable("gym_brand_id") UUID gymBrandId,
+            @PathVariable("location_id") UUID locationId
+    ) {
+        this.locationService.deleteLocation(locationId);
+        return new ResponseEntity<>(
+                true,
+                HttpStatus.OK
+        );
+    }
 }

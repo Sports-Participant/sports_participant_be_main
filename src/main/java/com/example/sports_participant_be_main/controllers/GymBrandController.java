@@ -48,4 +48,15 @@ public class GymBrandController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping("{gym_brand_id}")
+    public ResponseEntity<Boolean> delete(
+            @PathVariable("gym_brand_id") UUID gymBrandId
+    ) {
+        this.gymBrandService.delete(gymBrandId);
+        return new ResponseEntity<>(
+                true,
+                HttpStatus.OK
+        );
+    }
 }

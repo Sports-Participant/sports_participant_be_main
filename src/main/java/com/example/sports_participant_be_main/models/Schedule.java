@@ -52,9 +52,9 @@ public class Schedule extends GlobalEntityProperties {
     @ToString.Include
     private LocalTime closeTime;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false, updatable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
 
     @AllArgsConstructor

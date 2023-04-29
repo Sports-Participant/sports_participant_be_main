@@ -20,6 +20,7 @@ public class ScheduleService {
 
     private final ScheduleRepo scheduleRepo;
     private final LocationService locationService;
+    private final AppointmentService appointmentService;
 
     public Schedule save(Schedule schedule, UUID locationId) {
         Location location = this.locationService.findLocationById(locationId).orElseThrow(() -> {
@@ -30,14 +31,13 @@ public class ScheduleService {
         scheduleRepo.findByLocationIdAndDay(locationId, schedule.getDay())
                 .ifPresent((item) -> {
                     log.warn("Schedule on day={} for location_id={}", schedule.getDay(), locationId);
-                    item.setOpenTime(schedule.getOpenTime());
-                    item.setCloseTime(schedule.getCloseTime());
+                    item.setOpenTime(this.appointmentService.mapTimeToMultipleOfNumber(schedule.getOpenTime(), 15));
+                    item.setCloseTime(this.appointmentService.mapTimeToMultipleOfNumber(schedule.getCloseTime(), 15));
                     item.setIsWeekend(schedule.getIsWeekend());
                     this.scheduleRepo.save(item);
                     isExists.set(true);
                 });
 
-        schedule.setLocation(location);
         if (isExists.get()) return schedule;
         schedule.setLocation(location);
         return this.scheduleRepo.save(schedule);
@@ -48,7 +48,11 @@ public class ScheduleService {
             throw new LocationNotFoundException(locationId);
         });
 
-        schedules.forEach(item -> item.setLocation(location));
+        schedules.forEach(item -> {
+            item.setOpenTime(this.appointmentService.mapTimeToMultipleOfNumber(item.getOpenTime(), 15));
+            item.setCloseTime(this.appointmentService.mapTimeToMultipleOfNumber(item.getCloseTime(), 15));
+            item.setLocation(location);
+        });
         return this.scheduleRepo.saveAll(schedules);
     }
 }

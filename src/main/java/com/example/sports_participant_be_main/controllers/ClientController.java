@@ -49,4 +49,15 @@ public class ClientController {
         );
     }
 
+    @DeleteMapping("{client_id}")
+    public ResponseEntity<Boolean> delete(
+            @PathVariable("gym_brand_id") UUID gymBrandId,
+            @PathVariable("client_id") UUID clientId
+    ) {
+        this.clientService.delete(clientId);
+        return new ResponseEntity<>(
+                true,
+                HttpStatus.OK
+        );
+    }
 }

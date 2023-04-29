@@ -11,4 +11,5 @@ import java.util.UUID;
 @Repository
 public interface ClientRepo extends JpaRepository<Client, UUID> {
     Set<Client> getAllByLocationsIdIn(Collection<UUID> ids);
+    void deleteById(UUID id);
 }

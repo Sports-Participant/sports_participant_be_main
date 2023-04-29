@@ -71,4 +71,17 @@ public class AppointmentController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping("/appointments/{appointment_id}")
+    public ResponseEntity<Boolean> delete(
+            @PathVariable("gym_brand_id") UUID gymBrandId,
+            @PathVariable("location_id") UUID locationId,
+            @PathVariable("appointment_id") UUID appointmentId
+    ) {
+        this.appointmentService.delete(appointmentId);
+        return new ResponseEntity<>(
+                true,
+                HttpStatus.OK
+        );
+    }
 }

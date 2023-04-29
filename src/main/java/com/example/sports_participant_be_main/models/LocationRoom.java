@@ -50,9 +50,9 @@ public class LocationRoom extends GlobalEntityProperties {
     @ToString.Include
     private Integer capacity;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
 
     @Column(name = "status")
@@ -61,7 +61,7 @@ public class LocationRoom extends GlobalEntityProperties {
     @Enumerated(EnumType.STRING)
     private LocationRoom.Status status;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
     private Set<Appointment> appointments = new HashSet<>();
 
     @AllArgsConstructor
