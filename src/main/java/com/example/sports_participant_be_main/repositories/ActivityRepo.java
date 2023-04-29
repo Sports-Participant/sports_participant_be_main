@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ActivityRepo extends JpaRepository<Activity, UUID> {
     Set<Activity> findAllByLocationId(UUID id);
+    void deleteById(UUID id);
 }

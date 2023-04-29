@@ -66,4 +66,8 @@ public class ActivityService {
     public Optional<Activity> findById(UUID id) {
         return this.activityRepo.findById(id);
     }
+
+    public void delete(UUID id) {
+        this.activityRepo.deleteById(id);
+    }
 }

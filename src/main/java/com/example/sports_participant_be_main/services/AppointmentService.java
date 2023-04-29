@@ -124,9 +124,9 @@ public class AppointmentService {
     }
 
     public List<Appointment> getAllAppointmentsByDateAndEmployeeId(LocalDate date, UUID employeeId) {
-//        Employee employee = this.employeeService.findById(employeeId).orElseThrow(() -> {
-//            throw new RuntimeException("Employee not found");
-//        });
+        Employee employee = this.employeeService.findById(employeeId).orElseThrow(() -> {
+            throw new RuntimeException("Employee not found");
+        });
 //        if (employee.getRoles().stream()
 //                .map(Role::getName)
 //                .filter(item -> Objects.equals(item, com.example.sports_participant_be_main.constants.Role.COACH.message))
@@ -137,5 +137,13 @@ public class AppointmentService {
 
 
         return this.appointmentRepo.getAllByDateAndEmployeeIdOrderByStart(date, employeeId);
+    }
+
+    public List<Appointment> getAllByDate(LocalDate date) {
+        return this.appointmentRepo.getAllByDateOrderByStart(date);
+    }
+
+    public void delete(UUID id) {
+        this.appointmentRepo.deleteById(id);
     }
 }

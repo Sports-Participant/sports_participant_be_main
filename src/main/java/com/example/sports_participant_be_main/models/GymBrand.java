@@ -37,13 +37,13 @@ public class GymBrand extends GlobalEntityProperties {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Owner owner;
 
-    @OneToMany(mappedBy = "gymBrand")
+    @OneToMany(mappedBy = "gymBrand", cascade = CascadeType.REMOVE)
     private Set<Location> locations = new HashSet<>();
 
-    @OneToMany(mappedBy = "gymBrand")
+    @OneToMany(mappedBy = "gymBrand", cascade = CascadeType.REMOVE)
     private Set<Employee> employees = new HashSet<>();
 
     @Column(name = "status")

@@ -64,4 +64,8 @@ public class EmployeeService {
         });
         return this.employeeRepo.getAllByGymBrandId(gymBrand.getId());
     }
+
+    public void delete(UUID id) {
+        this.employeeRepo.deleteById(id);
+    }
 }

@@ -42,4 +42,16 @@ public class EmployeeController {
                 HttpStatus.CREATED
         );
     }
+
+    @DeleteMapping("{employee_id}")
+    public ResponseEntity<Boolean> delete(
+            @PathVariable("gym_brand_id") UUID gymBrandId,
+            @PathVariable("employee_id") UUID employeeId
+    ) {
+        this.employeeService.delete(employeeId);
+        return new ResponseEntity<>(
+                true,
+                HttpStatus.OK
+        );
+    }
 }

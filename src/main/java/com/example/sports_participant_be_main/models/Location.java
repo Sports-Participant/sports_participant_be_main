@@ -50,11 +50,16 @@ public class Location extends GlobalEntityProperties {
 
     @ManyToOne
     @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private GymBrand gymBrand;
 
-    @ManyToMany(mappedBy = "locations")
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "locations")
+//    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Client> clients = new HashSet<>();
 
     @Column(name = "status")
@@ -63,17 +68,27 @@ public class Location extends GlobalEntityProperties {
     @Enumerated(EnumType.STRING)
     private Location.Status status;
 
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Appointment> appointments = new HashSet<>();
 
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<LocationRoom> rooms = new HashSet<>();
 
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Schedule> schedules = new HashSet<>();
 
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Activity> activities = new HashSet<>();
+
+    @PreRemove
+    private void remove() {
+//        this.activities.clear();
+        this.clients.clear();
+    }
 
     @AllArgsConstructor
     public enum Status {

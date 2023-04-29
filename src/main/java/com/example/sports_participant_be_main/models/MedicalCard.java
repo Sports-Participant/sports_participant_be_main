@@ -30,9 +30,9 @@ public class MedicalCard extends GlobalEntityProperties {
     @ToString.Include
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
     @Column(name = "health_supplier", nullable = false)
@@ -41,16 +41,16 @@ public class MedicalCard extends GlobalEntityProperties {
     @Enumerated(EnumType.STRING)
     private HealthSupplier healthSupplier;
 
-    @OneToMany(mappedBy = "medicalCard")
+    @OneToMany(mappedBy = "medicalCard", cascade = CascadeType.REMOVE)
     private Set<Allergy> allergies = new HashSet<>();
 
-    @OneToMany(mappedBy = "medicalCard")
+    @OneToMany(mappedBy = "medicalCard", cascade = CascadeType.REMOVE)
     private Set<Illness> illnesses = new HashSet<>();
 
-    @OneToMany(mappedBy = "medicalCard")
+    @OneToMany(mappedBy = "medicalCard", cascade = CascadeType.REMOVE)
     private Set<Disability> disabilities = new HashSet<>();
 
-    @OneToMany(mappedBy = "medicalCard")
+    @OneToMany(mappedBy = "medicalCard", cascade = CascadeType.REMOVE)
     private Set<MedicalRecord> medicalRecords = new HashSet<>();
 
     public MedicalCardDto ofDto() {

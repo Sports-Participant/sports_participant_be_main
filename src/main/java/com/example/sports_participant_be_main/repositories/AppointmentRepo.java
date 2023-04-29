@@ -11,4 +11,6 @@ import java.util.UUID;
 @Repository
 public interface AppointmentRepo extends JpaRepository<Appointment, UUID> {
     List<Appointment> getAllByDateAndEmployeeIdOrderByStart(LocalDate date, UUID id);
+    List<Appointment> getAllByDateOrderByStart(LocalDate date);
+    void deleteById(UUID id);
 }

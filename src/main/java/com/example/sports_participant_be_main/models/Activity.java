@@ -41,13 +41,13 @@ public class Activity extends GlobalEntityProperties {
     @ToString.Include
     private String description;
 
-    @OneToMany(mappedBy = "activity")
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private Set<ActivityPrice> activityPrices = new HashSet<>();
 
-    @OneToMany(mappedBy = "activity")
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private Set<Appointment> appointments = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "activity_employee",
             joinColumns = @JoinColumn(name = "activity_id"),
@@ -55,9 +55,9 @@ public class Activity extends GlobalEntityProperties {
     )
     private Set<Employee> employees = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
 
     public ActivityDto ofDto() {

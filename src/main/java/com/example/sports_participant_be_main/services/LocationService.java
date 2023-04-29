@@ -95,4 +95,12 @@ public class LocationService {
 
         return this.locationRoomRepo.getAllByLocationId(location.getId());
     }
+
+    public void deleteLocation(UUID id) {
+        this.locationRepo.deleteById(id);
+    }
+
+    public void deleteLocationRoom(UUID id) {
+        this.locationRoomRepo.deleteById(id);
+    }
 }

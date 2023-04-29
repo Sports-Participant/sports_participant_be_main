@@ -57,7 +57,7 @@ public class Employee extends GlobalEntityProperties {
     @ToString.Include
     private String phoneNumber;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable (
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -67,7 +67,7 @@ public class Employee extends GlobalEntityProperties {
 
     @ManyToOne
     @JoinColumn(name = "gym_brand_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private GymBrand gymBrand;
 
     @Column(name = "status")
@@ -76,10 +76,10 @@ public class Employee extends GlobalEntityProperties {
     @ToString.Include
     private Employee.Status status;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private Set<Activity> activities = new HashSet<>();
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
     private Set<Appointment> appointments = new HashSet<>();
 
     public void removeRole(Role role){

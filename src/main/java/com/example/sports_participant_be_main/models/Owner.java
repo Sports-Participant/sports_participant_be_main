@@ -73,7 +73,7 @@ public class Owner extends GlobalEntityProperties {
     @Enumerated(EnumType.STRING)
     private Owner.Status status;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private Set<GymBrand> gymBrands = new HashSet<>();
 
     @AllArgsConstructor
