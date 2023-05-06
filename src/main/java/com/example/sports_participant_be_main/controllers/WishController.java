@@ -83,7 +83,8 @@ public class WishController {
     ) {
         return new ResponseEntity<>(
                 this.wishService.update(
-                        wishDto.ofEntity()
+                        wishDto.ofEntity(),
+                        gymBrandId
                 ).ofDto(),
                 HttpStatus.OK
         );

@@ -32,7 +32,11 @@ public class WishService {
         return this.wishRepo.save(wish);
     }
 
-    public Wish update(Wish wish) {
+    public Wish update(Wish wish, UUID gymBrandId) {
+        GymBrand gymBrand = this.gymBrandService.findById(gymBrandId).orElseThrow(() -> {
+            throw new GymBrandNotFoundException(gymBrandId);
+        });
+        wish.setGymBrand(gymBrand);
         return this.wishRepo.save(wish);
     }
 
