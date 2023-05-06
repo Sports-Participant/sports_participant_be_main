@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .authorizeRequests(
                         authz -> authz
                                 .antMatchers("/auth/token", "/auth/register", "/auth/login", "/health").permitAll()
+                                .antMatchers(HttpMethod.POST, "/wishes").permitAll()
                                 .antMatchers(HttpMethod.POST, "/gym_brands/{gym_brand_id}/employee")
                                     .hasAnyAuthority("OWNER", "ADMIN")
                                 .anyRequest().authenticated()
