@@ -1,9 +1,11 @@
 package com.example.sports_participant_be_main.controllers;
 
+import com.example.sports_participant_be_main.models.Exercise;
 import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.models.Role;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
 import com.example.sports_participant_be_main.services.AppointmentService;
+import com.example.sports_participant_be_main.services.ExerciseService;
 import com.example.sports_participant_be_main.services.OwnerService;
 import com.example.sports_participant_be_main.services.RoleService;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class HealthCheckController {
     private final RoleService roleService;
     private final OwnerRepo ownerRepo;
     private final AppointmentService appointmentService;
+    private final ExerciseService exerciseService;
 
     @GetMapping
     public String health() {
@@ -52,6 +55,33 @@ public class HealthCheckController {
 //        o.setRole(null);
 ////        o.removeRole(r);
 //        this.ownerRepo.delete(o);
+
+//        for (int i = 1; i <= 10; ++i) {
+//            exerciseService.save(Exercise.builder()
+//                    .title("Title " + 1)
+//                    .text("Lorem ipsum o kurwa ==========================qklfvmlkdmvlkmflkfdmgglkml  fldf vdl ldfd df  fd ldffl ldf d f d fdsdfsdf")
+//                    .disability(Exercise.Disability.ABSENCE_OF_HAND)
+//                    .urls(List.of("https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk"))
+//                    .build());
+//        }
+//
+//        for (int i = 11; i <= 20; ++i) {
+//            exerciseService.save(Exercise.builder()
+//                    .title("Title " + 1)
+//                    .text("Lorem ipsum o kurwa ==========================qklfvmlkdmvlkmflkfdmgglkml  fldf vdl ldfd df  fd ldffl ldf d f d fdsdfsdf")
+//                    .disability(Exercise.Disability.ABSENCE_OF_LEG)
+//                    .urls(List.of("https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk"))
+//                    .build());
+//        }
+//
+//        for (int i = 21; i <= 30; ++i) {
+//            exerciseService.save(Exercise.builder()
+//                    .title("Title " + 1)
+//                    .text("Lorem ipsum o kurwa ==========================qklfvmlkdmvlkmflkfdmgglkml  fldf vdl ldfd df  fd ldffl ldf d f d fdsdfsdf")
+//                    .disability(Exercise.Disability.NO_HANDS)
+//                    .urls(List.of("https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk"))
+//                    .build());
+//        }
 
 
         return "alive";

@@ -45,7 +45,7 @@ public class Allergy extends GlobalEntityProperties {
     private Allergy.Type type;
 
     @ElementCollection
-    @CollectionTable(name = "alergy_symptoms", joinColumns = @JoinColumn(name = "alergy_id"))
+    @CollectionTable(name = "allergy_symptoms", joinColumns = @JoinColumn(name = "allergy_id"))
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private List<String> symptoms = new ArrayList<>();
 
