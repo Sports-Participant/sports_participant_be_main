@@ -39,7 +39,8 @@ public class AppointmentController {
                         locationId,
                         appointmentDto.getRoomId(),
                         appointmentDto.getEmployeeId(),
-                        appointmentDto.getActivityId()
+                        appointmentDto.getActivityId(),
+                        appointmentDto.getClientId()
                 ).ofDto(),
                 HttpStatus.CREATED
         );

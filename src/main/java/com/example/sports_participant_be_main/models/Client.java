@@ -95,6 +95,9 @@ public class Client extends GlobalEntityProperties {
     @OneToOne(mappedBy = "client", cascade = CascadeType.REMOVE)
     private MedicalCard medicalCard;
 
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
+    private Set<Appointment> appointments = new HashSet<>();
+
     // посилання на медичну карту якщо вона є, якщо ні, то це поле null
 
     // масив локацій (бо можуть бути різні підписки на послуги)
