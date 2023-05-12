@@ -23,13 +23,15 @@ public class AppointmentService {
     private final AppointmentRepo appointmentRepo;
     private final EmployeeService employeeService;
     private final ActivityService activityService;
+    private final ClientService clientService;
 
     public Appointment save(
             Appointment appointment,
             UUID locationId,
             UUID roomId,
             UUID employeeId,
-            UUID activityId
+            UUID activityId,
+            UUID clientId
     ) {
         Location location = this.locationService.findLocationById(locationId).orElseThrow(() -> {
             throw new LocationNotFoundException(locationId);
@@ -43,12 +45,16 @@ public class AppointmentService {
         Activity activity = this.activityService.findById(activityId).orElseThrow(() -> {
             throw new RuntimeException("Activity not found");
         });
+        Client client = this.clientService.findById(clientId).orElseThrow(() -> {
+            throw new RuntimeException("Client not found");
+        });
 
         appointment.setLocation(location);
         appointment.setRoom(room);
         appointment.setActivity(activity);
         appointment.setStatus(Appointment.Status.ACTIVE);
         appointment.setEmployee(employee);
+        appointment.setClient(client);
         return this.appointmentRepo.save(appointment);
     }
 

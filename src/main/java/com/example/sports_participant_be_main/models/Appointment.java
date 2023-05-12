@@ -66,18 +66,19 @@ public class Appointment extends GlobalEntityProperties {
 
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     private LocationRoom room;
 
     @ManyToOne
     @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = true)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Activity activity;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
+    private Client client;
 
     @AllArgsConstructor
     public enum Status {

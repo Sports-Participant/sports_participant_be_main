@@ -26,6 +26,9 @@ public class AppointmentDto {
     private UUID locationId;
 
     @NotNull
+    private UUID clientId;
+
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
 
