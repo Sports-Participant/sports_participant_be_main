@@ -1,13 +1,11 @@
 package com.example.sports_participant_be_main.controllers;
 
+import com.example.sports_participant_be_main.dto.StatisticsDto;
 import com.example.sports_participant_be_main.models.Exercise;
 import com.example.sports_participant_be_main.models.Owner;
 import com.example.sports_participant_be_main.models.Role;
 import com.example.sports_participant_be_main.repositories.OwnerRepo;
-import com.example.sports_participant_be_main.services.AppointmentService;
-import com.example.sports_participant_be_main.services.ExerciseService;
-import com.example.sports_participant_be_main.services.OwnerService;
-import com.example.sports_participant_be_main.services.RoleService;
+import com.example.sports_participant_be_main.services.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +25,7 @@ public class HealthCheckController {
     private final OwnerRepo ownerRepo;
     private final AppointmentService appointmentService;
     private final ExerciseService exerciseService;
+    private final StatisticsService statisticsService;
 
     @GetMapping
     public String health() {
@@ -82,8 +81,8 @@ public class HealthCheckController {
 //                    .urls(List.of("https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk", "https://www.google.com.ua/?hl=uk"))
 //                    .build());
 //        }
-
-
+        StatisticsDto s = this.statisticsService.getStatistics(UUID.fromString("c52096a0-9ec6-4d06-b1af-63b3cccd84bb"), UUID.fromString("50b87025-6a94-47a2-b1be-0e11b68c72ff"));
+        System.out.println(s);
         return "alive";
     }
 
